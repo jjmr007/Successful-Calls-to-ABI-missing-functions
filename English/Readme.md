@@ -112,3 +112,25 @@ According to the solidity documentation:
 The repository continues:
 
 >"Additionally, this function is executed when a contract receives money (in ethers, and without any other data associated with the transaction) but only when it has been labeled as **_payable_**. If such conditions are not met, the contract rejects any sending of funds in the form of ethereum."
+
+But the curious thing about this function are the instructions that it orders within its internal description:
+
+```js
+function() external payable {
+        address _impl = implementation();
+        require(_impl != address(0), "implementation contract not set");
+        
+        assembly {
+            let ptr := mload(0x40)
+            calldatacopy(ptr, 0, calldatasize)
+            let result := delegatecall(gas, _impl, ptr, calldatasize, 0, 0)
+            let size := returndatasize
+            returndatacopy(ptr, 0, size)
+
+            switch result
+            case 0 { revert(ptr, size) }
+            default { return(ptr, size) }
+        }
+    }
+```
+
