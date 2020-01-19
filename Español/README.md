@@ -106,7 +106,7 @@ Continúa el repositorio:
 
 Pero lo curioso de esta función son las instrucciones que ordena dentro de su descripción interna:
 
-```json
+```js
 function() external payable {
         address _impl = implementation();
         require(_impl != address(0), "implementation contract not set");
@@ -281,7 +281,7 @@ Pero para descubrir ahora el ABI, necesitamos la interfaz, que este equipo tuvo 
 
 En este caso, el contrato que invoca al token USD-Coin se denomina "FiatTokenProxy", y su "*Fallback-Function*", hace una llamada indirecta a una funcion interna (privada) que es la que contiene el codigo assembly, un poco mejor diseñado en cuanto a eficiencia (gracias también a los desarrolladores de [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-labs/blob/master/initializer_contracts_with_args/contracts/Proxy.sol) ) y que contiene lo siguinete:
 
-```json
+```js
   function () payable external {
     _fallback();
   }
