@@ -13,3 +13,19 @@ For example, the "totalSupply" function, which is a mandatory method in any ERC2
 Other essential functions such as the "transfer" one or the balance inquiry of each user are absent as well.
 
 How can, therefore these currencies operate and why traditional wallets, such as Metamask, have no problem executing transactions with them?
+
+Next we will inspect these contracts through the [NODEjs](https://nodejs.org/es/) environment using the [web3.js](https://github.com/ethereum/web3.js/#installation) package.
+
+It is convenient in principle, using our preferred command console ([GitBash](https://gitforwindows.org/) works good for me), to check if these tools are installed:
+
+```cmd
+>npm -v
+```
+	
+```cmd
+>node -v
+```
+
+```cmd
+> npm view web3 version
+```
