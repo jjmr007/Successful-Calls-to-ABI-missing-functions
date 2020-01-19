@@ -29,3 +29,15 @@ It is convenient in principle, using our preferred command console ([GitBash](ht
 ```cmd
 > npm view web3 version
 ```
+
+If any of these queries fail, it is most likely that the installation is required.
+
+Then we can proceed as follows:
+
+N ° 1 We will enter the node console, as our execution environment for our web3 package:
+
+```cmd
+C:\Users\MiUsuario\CarpetaLocal\>node
+>_
+```
+
