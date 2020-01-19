@@ -86,7 +86,7 @@ En este caso el ABI es el de la version oficial del contrato [True-USD](https://
 
 A continuación se despliega de manera ordenada todo el contenido y será mas o menos accesible a simple vista. Será bastante evidente que ninguna función de un token ERC20 existe.
 
-![alt text](./abi.PNG "ABI")
+![ABI](./abi.PNG)
 
 Como era de esperar, nada de "transfer" o de "balanceOf". Y ahora ¿Que hacemos?
 
@@ -134,7 +134,7 @@ Las instrucciones de *Assembly* mas o menos estan instruyendo lo siguiente:
    
    - Lo importante a rescatar aqui es que cuando un contrato invoca la ejecución de una función de otro mediante el comendo **delegatecall**, todos los cambios de estado, todo cuanto se escribe, todo fondo que se recibe, llega, se escribe y se actualiza **_en el contrato invocador_**, *no en el invocado*!
    
-   ![alt text](./delegatecall.PNG "DELEGATECALL")
+   ![DELEGATECALL](./delegatecall.PNG)
    
  - iii.- Esto significa que no es necesario que la función sin nombre devuelva ningun argumento, ya que la orden de assembly *returndatacopy* almacenará en memoria todo lo que haga falta recuperar! (por lo que es innecesario que la funcion sin nombre devuelva explícitamente argumento alguno, ya que estos quedan alojados en la memoria volatil de la máquina virtual de ethereum y pueden rescatarse mediante la interfaz que este utilizando el usuario).
 
@@ -154,7 +154,7 @@ Y ahora al inspeccionar al ABI se obtiene
 >abi 
 ```
 
-![alt text](./abi1.PNG "ABI1")	![alt text](./abi2.PNG "ABI2")
+![ABI1](./abi1.PNG)	![ABI2](./abi2.PNG)
 
 En donde se observan las funciones mas *comunes* de un token ERC20.
 
