@@ -44,7 +44,7 @@ undefined
 >_
 ```
 
-N° 3 Lo siguiente es encontrar la URL de algun servicio proveedor de conexion remota a la red de ethereum. Una forma de hacerlo es mediente los servicios de la empresa [INFURA](https://infura.io/). Par aun trafico bajo y entornos de prueba, se puede obtener un enlace totalmente gratuito tanto para la red principal como para la mayoría de las redes de prueba.
+N° 3 Lo siguiente es encontrar la URL de algun servicio proveedor de conexion remota a la red de ethereum. Una forma de hacerlo es mediente los servicios de la empresa [INFURA](https://infura.io/). Para un trafico bajo y entornos de prueba, se puede obtener un enlace totalmente gratuito tanto para la red principal como para la mayoría de las redes de prueba.
 
 Hay que realizar una sencilla subscripción y registrar un proyecto. A cambio la plataforma nos da una direción URL que nos dará acceso indirecto a la red ethereum. Esta dirección tendrá la forma de:
 
