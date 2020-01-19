@@ -86,7 +86,7 @@ En este caso el ABI es el de la version oficial del contrato [True-USD](https://
 
 A continuación se despliega de manera ordenada todo el contenido y será mas o menos accesible a simple vista. Será bastante evidente que ninguna función de un token ERC20 existe.
 
-![image](abi.png)
+![image](abi.PNG)
 
 Como era de esperar, nada de "transfer" o de "balanceOf". Y ahora ¿Que hacemos?
 
