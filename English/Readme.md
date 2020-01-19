@@ -57,3 +57,17 @@ For low traffic cases and test environments, a completely free link can be obtai
 
 You have to make a simple subscription and register a project. In return, the platform gives us a URL that will give us indirect access to the ethereum network. This address will have the form of:
 
+```url
+mainnet.infura.io/v3/PROJECT_KEY_NUMBER
+```
+
+N ° 4 Now we are able to obtain an instance of web3:
+
+```cmd
+>var url = 'https://mainnet.infura.io/v3/PROJECT_KEY_NUMBER'
+undefined 
+>var web3 = new Web3(url)
+undefined 
+>_
+```
+
