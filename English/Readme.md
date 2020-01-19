@@ -41,3 +41,10 @@ C:\Users\MiUsuario\CarpetaLocal\>node
 >_
 ```
 
+N ° 2 We will now request the 'web3' library by storing it in a slightly different variable: Web3 (with a capital 'W').
+
+```cmd
+>var Web3 = require('web3')
+undefined 
+>_
+```
