@@ -48,3 +48,12 @@ N ° 2 We will now request the 'web3' library by storing it in a slightly differ
 undefined 
 >_
 ```
+
+N ° 3 The following is to find the URL of some service provider of remote connection to the ethereum network.
+
+One way to do this is through the services of the [INFURA](https://infura.io/) company.
+
+For low traffic cases and test environments, a completely free link can be obtained for both the main network and most test networks.
+
+You have to make a simple subscription and register a project. In return, the platform gives us a URL that will give us indirect access to the ethereum network. This address will have the form of:
+
