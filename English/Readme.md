@@ -73,11 +73,11 @@ undefined
 
 No. 5 We now create an instance of the contract that we want to inspect. But there is a small problem: to rebuild this instance we need the address where said contract resides in the blocchain and also, the ABI.json file of the contract.
 
-But if we extract the ABI.json asset from the contract directly deployed from, say, True-USD, we will not be able to execute any function worthy of an ERC20 token. How we do?
+But if we extract the ABI.json asset from the contract directly deployed from, say, [True-USD](https://etherscan.io/address/0x0000000000085d4780b73119b644ae5ecd22b376#code), we will not be able to execute any function worthy of an ERC20 token. How we do?
 
-In the normal case we would do the following: we use some appropriate browser such as Etherscan and look for the contract of our interest. If this seems the same than looking for a needle in a haystack, it is possible to do so by choosing the "Tokens" page, looking the most famous ones. We can also locate the explorer page of a particular token, by finding it on the CoinMArketCap page.
+In the normal case we would do the following: we use some appropriate browser such as [Etherscan](https://etherscan.io/) and look for the contract of our interest. If this seems the same than looking for a needle in a haystack, it is possible to do so by choosing the "Tokens" page, looking the most famous ones. We can also locate the explorer page of a particular token, by finding it on the [CoinMArketCap](https://coinmarketcap.com/) page.
 
-The remarkable thing about all this information is that it is public. So the "ABI contract" can be copied directly from the page where the contract is exposed in etherscan (as long as the owner of the code has verified the contract).
+The remarkable thing about all this information is that it is public. So the "ABI contract" can be copied directly from the page where the contract is exposed in etherscan (as long as the owner of the code has [verified](https://github.com/jjmr007/Deploying-and-Verifying-a-Contract-using-Remix-and-Etherscan) the contract).
 
 Once the ABI data is copied, we go to the console and declare it:
 
