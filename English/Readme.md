@@ -87,3 +87,13 @@ undefined
 >_
 ```
 
+In this case, the ABI is the one of the official version of the True-USD contract. We can inspect the content of this element when executing:
+
+```cmd
+>abi 
+```
+
+Then all the content is displayed in an orderly manner and it will be more or less accessible to the naked eye. It will be quite evident that no function of an ERC20 token exists.
+
+![image](abi.PNG)
+
