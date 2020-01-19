@@ -134,7 +134,7 @@ Las instrucciones de *Assembly* mas o menos estan instruyendo lo siguiente:
    
    - Lo importante a rescatar aqui es que cuando un contrato invoca la ejecución de una función de otro mediante el comendo **delegatecall**, todos los cambios de estado, todo cuanto se escribe, todo fondo que se recibe, llega, se escribe y se actualiza **_en el contrato invocador_**, *no en el invocado*!
    
-   ![DELEGATECALL](/delegatecall.PNG)
+   ![image](delegatecall.PNG)
    
  - iii.- Esto significa que no es necesario que la función sin nombre devuelva ningun argumento, ya que la orden de assembly *returndatacopy* almacenará en memoria todo lo que haga falta recuperar! (por lo que es innecesario que la funcion sin nombre devuelva explícitamente argumento alguno, ya que estos quedan alojados en la memoria volatil de la máquina virtual de ethereum y pueden rescatarse mediante la interfaz que este utilizando el usuario).
 
@@ -154,7 +154,7 @@ Y ahora al inspeccionar al ABI se obtiene
 >abi 
 ```
 
-![ABI1](/abi1.PNG)	![ABI2](/abi2.PNG)
+![image](abi1.PNG)	![image](abi2.PNG)
 
 En donde se observan las funciones mas *comunes* de un token ERC20.
 
@@ -178,13 +178,13 @@ Y se pueden obtener los *métodos* ejecutables dese el token mediante la interfa
 
 Existe otro modo de hacer esto mismo utilizando [MyEtherWallet](https://www.myetherwallet.com/access-my-wallet) donde al iniciar la cartera con Metamask, vamos a la sección contratos, colocamos la addres del token y en la sección del ABI, colocamos el .json de la implementación (cuidando de haber elegido la red correcta, en este caso MAIN):
 
-![alt text](./MyEth1.PNG "MYETH1")
-![alt text](./MyEth2.PNG "MYETH2")
-![alt text](./MyEth3.PNG "MYETH3")
-![alt text](./MyEth4.PNG "MYETH4")
-![alt text](./MyEth5.PNG "MYETH5")
-![alt text](./MyEth6.PNG "MYETH6")
-![alt text](./MyEth7.PNG "MYETH7")
+![image](MyEth1.PNG)
+![image](MyEth2.PNG)
+![image](MyEth3.PNG)
+![image](MyEth4.PNG)
+![image](MyEth5.PNG)
+![image](MyEth6.PNG)
+![image](MyEth7.PNG)
 
 Desde la consola pueden intentarse metodos similares:
 
@@ -258,7 +258,7 @@ Promise { <pending> }
 
 De acuerdo a Etherscan, la exchange Binance posee para el momento que se realiza esta consulta:
 
-![alt text](./Binance.PNG "MYETH7")
+![image](Binance.PNG)
 
 De acuerdo a legacy:
 
@@ -366,7 +366,7 @@ Promise { <pending> }
 > 8001035943712
 ```
 
-![alt text](./Poloniex.PNG "POL1")
+![image](Poloniex.PNG)
 
 Contrario al caso de Trust Token, el contrato de implementación de USD-Coin esta totalmente vacío, literalmente funge como una especie de libreria del contrato principal:
 
