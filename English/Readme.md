@@ -97,3 +97,18 @@ Then all the content is displayed in an orderly manner and it will be more or le
 
 ![image](abi.PNG)
 
+As expected, nothing of "transfer" or "balanceOf". So, what can we do now?
+
+N ° 6 The first thing that catches our attention is that it is a contract that has already undergone an update. His address number strangely and inexplicably has a sequence of 11 zeros! How did they achieve such eccentricity?
+
+It was used a special application to calculate "[vanity addresses](https://github.com/MyEtherWallet/VanityEth)" that what they do is to generate as in a mining software, multiple private keys for externally controlled address (EOA) in order to deploy a contract several times, until the contract address deployed had the amount of zeros that the algorithm can afford or the user is willing to wait for them to be generated. This was carried out by the [Trust-Token](https://www.trusttoken.com/) company in order to grant an extra security feature to its contract.
+
+On the other hand, the contract does not have the name "True-USD", that was in the past! Now it is called: "OwnedUpgradeabilityProxy" and is the sequence of several code blocks in the form of abstract contracts, inherited one after another until the compilable contract  has the presence of a function without any name, known as [FALLBACK-FUNCTION](https://solidity.readthedocs.io/en/v0.4.23/contracts.html#fallback-function): a function that must be of external access and with no arguments!
+
+According to the solidity documentation:
+
+>"Every contract can have exactly ONE single function without a name. It cannot have arguments and cannot return any value. This function is executed when the contract that contains it is called and none of the functions it has in its ABI *MATCHES* with the function that is being invoked against said contract, or if no data on any function is provided. "
+
+The repository continues:
+
+"Additionally, this function is executed when a contract receives money (in ethers, and without any other data associated with the transaction) but only when it has been labeled as **_payable_**. If such conditions are not met, the contract rejects any sending of funds in the form of ethereum."
