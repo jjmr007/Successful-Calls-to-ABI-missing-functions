@@ -132,7 +132,7 @@ Las instrucciones de *Assembly* mas o menos estan instruyendo lo siguiente:
  - i.- En una variable *ptr* se almacena la data de la función que se desea ejecutar y que se almacena en la memoria *a partir* de la posición 0x40, y la cantidad de datos depende del numero que se recupera de **_calldatasize_**.
  - ii.- En otra variable llamada *result* se **recoge** el resultado de llamar al contrato *implementation* y ejecutar las ordenes que están en ptr, pero, en lugar de hacerlo según el comando **_call_**, **delegatecall** ejecuta todo lo que tiene que hacer como si el contrato que hace las cosas fuera el que le esta invocando y todo cuanto escribe y todo estado que se cambia se asienta en el contrato invocador, y no en el invocado. Esto esta magistralmente explicado en la nota que [CENTRE](https://medium.com/centre-blog/designing-an-upgradeable-ethereum-contract-3d850f637794) preparó esoecialmente para esta innovadora estrategia, y que sin duda es un avance en el estado del arte de estas tecnologías financieras.
    
-   - Lo importante a rescatar aqui es que cuando un contrato invoca la ejecución de una función de otro mediante el comendo **delegatecall**, todos los cambios de estado, todo cuanto se escribe, todo fondo que se recibe, llega, se escribe y se actualiza **_en el contrato invocador_**, *no en el invocado*!
+   - Lo importante a rescatar aqui es que cuando un contrato invoca la ejecución de una función de otro mediante el comando **delegatecall**, todos los cambios de estado, todo cuanto se escribe, todo fondo que se recibe, llega, se escribe y se actualiza **_en el contrato invocador_**, *no en el invocado*!
    
    ![image](delegatecall.PNG)
    
