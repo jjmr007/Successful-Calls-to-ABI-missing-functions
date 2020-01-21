@@ -194,3 +194,16 @@ There is another way of doing this by using [MyEtherWallet](https://www.myetherw
 ![image](MyEth7.PNG)
 
 From the console, similar methods can be try:
+
+```cmd
+>contrato.methods.name().call(function(err, result) { console.log(result) })
+Promise { <pending> }
+> TrueUSD
+```
+
+```cmd
+>contrato.methods.totalSupply().call(function(err, result) { console.log(result) })
+Promise { <pending> }
+> 144003798740000000000000000
+``` 
+
