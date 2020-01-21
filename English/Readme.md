@@ -145,3 +145,7 @@ There is an address type variable called "*implementaton*" (_impl) that is only 
 
    ![image](delegatecall.PNG)
 
+ - iii.- This means that it is not necessary for the unnamed function to return any arguments, since the *returndatacopy* assembly instruction will store in memory everything that needs to be recovered! (So it is unnecessary for the fallback function to explicitly return any argument, since these are housed in the volatile memory of the ethereum virtual machine and can be rescued through the interface that the user is using).
+
+All this means that if the *implementation* function to be executed is replaced; without anyone even noticing, the logic that will begin to execute the contract will have been updated on, without altering the data or the balance values of any of the users!
+
