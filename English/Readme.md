@@ -274,3 +274,12 @@ According the **_balanceOf_** method of the legacy contract:
 Promise { <pending> }
 > 42000000000000000000000000
 ``` 
+
+N ° 9 Let's move on to the much more evolved case of [USD-Coin](https://etherscan.io/address/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48#code). This team of developers had already learned the hard lessons of their predecessors and built a much simpler, more compact and versatile contract.
+
+```cmd
+>var token = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+undefined 
+>_
+```
+
