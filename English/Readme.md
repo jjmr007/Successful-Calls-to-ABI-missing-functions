@@ -156,3 +156,10 @@ No. 7 So in order to properly execute the [True-USD](https://etherscan.io/addres
 undefined 
 >_
 ```
+And now by inspecting the ABI we get
+
+```cmd
+>abi 
+```
+
+![image](abi1.PNG)	![image](abi2.PNG)
