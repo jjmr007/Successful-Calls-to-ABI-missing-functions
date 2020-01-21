@@ -402,3 +402,5 @@ Promise { <pending> }
 Promise { <pending> }
 > 0
 ```
+
+N ° 10 Finally, we will address the case of [EURS - Stasis](https://etherscan.io/address/0xdb25f211ab05b1c97d595516f45794528a807ad8#code), since it has an update plan with intermediate technology, but introduces a great innovation: the delegated transfers with signatures; which would have the unexpected capacity to solve the inconveniences that the "*approve*" and "*transferFrom*" functions implicitly generate, making them (together with their "*allowances*" mapping) obsolete programming objects in an future ERC20 token.
