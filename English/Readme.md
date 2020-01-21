@@ -263,3 +263,14 @@ Promise { <pending> }
 > 144003798740000000000000000
 ```
 
+According to Etherscan, the Binance exchange has the following balance by the time this query is made:
+
+![image](Binance.PNG)
+
+According the balanceOf method of the legacy contract:
+
+```cmd
+>contract.methods.balanceOf('0xF977814e90dA44bFA03b6295A0616a897441aceC').call(function(err, result) { console.log(result) })
+Promise { <pending> }
+> 42000000000000000000000000
+``` 
