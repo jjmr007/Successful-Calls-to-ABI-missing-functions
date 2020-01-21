@@ -267,7 +267,7 @@ According to Etherscan, the Binance exchange has the following balance by the ti
 
 ![image](Binance.PNG)
 
-According the balanceOf method of the legacy contract:
+According the **_balanceOf_** method of the legacy contract:
 
 ```cmd
 >contract.methods.balanceOf('0xF977814e90dA44bFA03b6295A0616a897441aceC').call(function(err, result) { console.log(result) })
