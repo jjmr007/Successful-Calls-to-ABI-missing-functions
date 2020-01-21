@@ -221,3 +221,18 @@ Promise { <pending> }
 > TUSD
 ``` 
 
+As an exercise, let us note that if we had used the interface address as the contract address, even though it legitimately has the ABI code that we have executed, we will find that on this contract there is hardly anything written. That is, it has a total Supply of zero, nobody has balances, etc.
+
+```cmd
+>var contract = new web3.eth.Contract(abi, interface)
+undefined
+>contract.methods.totalSupply().call(function(err, result) { console.log(result) })
+Promise { <pending> }
+> 0
+``` 
+
+```cmd
+>contract.methods.balanceOf('0x8bb38C74B8aaf929201f013C9ECc42b750E562c6').call(function(err, result) { console.log(result) })
+Promise { <pending> }
+> 0
+``` 
