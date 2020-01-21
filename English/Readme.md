@@ -169,11 +169,17 @@ Where the most *common* functions of an ERC20 token are observed.
 Now, it is indeed possible to create the appropriate instance of the contract:
 
 ```cmd
->var interfaz = '0xcb9a11afdc6bdb92e4a6235959455f28758b34ba'
+>var interface = '0xcb9a11afdc6bdb92e4a6235959455f28758b34ba'
 undefined 
 >var token = '0x0000000000085d4780B73119b644AE5ecd22b376'
 undefined 
->var contrato = new web3.eth.Contract(abi, token)
+>var contract = new web3.eth.Contract(abi, token)
 undefined 
 >_
+```
+
+And we can get the *executable* methods from the token through the interface:
+
+```cmd
+>contract.methods
 ```
