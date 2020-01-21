@@ -283,3 +283,47 @@ undefined
 >_
 ```
 
+But this time, to discover the ABI we need the interface, which this team had the cunning to keep "*internal*", a private variable. Although certainly nothing in the ethereum blockchain is hidden, there are ways to complicate the lives of upstarts and curious.
+
+In this case, the contract that invokes the USD-Coin token is called "FiatTokenProxy", and its "*Fallback-Function*" makes an indirect call to an internal (private) function that is the one that contains the assembly code, with a little better efficiency design (thanks also to the [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-labs/blob/master/initializer_contracts_with_args/contracts/Proxy.sol) developers) and containing the following:
+
+```js
+  function () payable external {
+    _fallback();
+  }
+  
+  function _fallback() internal {
+    _willFallback();
+    _delegate(_implementation());
+  }
+  
+  function _willFallback() internal {
+  }
+  
+  function _implementation() internal view returns (address impl) {
+    bytes32 slot = IMPLEMENTATION_SLOT;
+    assembly {
+      impl := sload(slot)
+    }
+  }
+
+  function _delegate(address implementation) internal {
+    assembly {
+      // Copy msg.data. We take full control of memory in this inline assembly
+      // block because it will not return to Solidity code. We overwrite the
+      // Solidity scratch pad at memory position 0.
+      calldatacopy(0, 0, calldatasize)
+
+      // Call the implementation.
+      // out and outsize are 0 because we don't know the size yet.
+      let result := delegatecall(gas, implementation, 0, calldatasize, 0, 0)
+
+      // Copy the returned data.
+      returndatacopy(0, 0, returndatasize)
+
+      switch result
+      case 0 { revert(0, returndatasize) }
+      default { return(0, returndatasize) }
+    }
+  }
+```
