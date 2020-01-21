@@ -375,3 +375,30 @@ Promise { <pending> }
 
 ![image](Poloniex.PNG)
 
+Contrary to the case of Trust Token, the USD-Coin implementation contract is completely empty, it literally serves as a kind of library of the main contract:
+
+```cmd
+>var contract = new web3.eth.Contract(abi, implementation)
+undefined 
+>contract.methods.name().call(function(err, result) { console.log(result) })
+Promise { <pending> }
+> 
+```
+
+```cmd
+>contract.methods.totalSupply().call(function(err, result) { console.log(result) })
+Promise { <pending> }
+> 0
+```
+
+```cmd
+>contract.methods.decimals().call(function(err, result) { console.log(result) })
+Promise { <pending> }
+> 0
+```
+
+```cmd
+>contract.methods.balanceOf('0xA910f92ACdAf488fa6eF02174fb86208Ad7722ba').call(function(err, result) { console.log(result) })
+Promise { <pending> }
+> 0
+```
