@@ -207,3 +207,17 @@ Promise { <pending> }
 > 144003798740000000000000000
 ``` 
 
+The reason for passing the results of *call()* to a function and printing these results on the console is due to the asynchronous nature in the interface between javascript and web3.eth.
+
+```cmd
+>contract.methods.decimals().call(function(err, result) { console.log(result) })
+Promise { <pending> }
+> 18
+``` 
+
+```cmd
+>contract.methods.symbol().call(function(err, result) { console.log(result) })
+Promise { <pending> }
+> TUSD
+``` 
+
