@@ -191,6 +191,6 @@ There is another way of doing this by using [MyEtherWallet](https://www.myetherw
 ![image](MyEth3.PNG)
 ![image](MyEth4.PNG)
 ![image](MyEth5.PNG)
-![image](MyEth6.PNG)
 ![image](MyEth7.PNG)
 
+From the console, similar methods can be try:
