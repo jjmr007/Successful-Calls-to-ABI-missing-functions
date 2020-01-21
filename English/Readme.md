@@ -134,3 +134,4 @@ function() external payable {
     }
 ```
 
+There is an address type variable called "*implementaton*" (_impl) that is only taken into account if it is non-zero (that is, if it has been defined) and **is assumed to be another contract** and that executes a series of instructions at "**_assembly_**" level, and what basically does is to take the data that is being instructed to be executed and is executed it by means of the **_DELEGATECALL_** [operational command](https://ethervm.io/).
