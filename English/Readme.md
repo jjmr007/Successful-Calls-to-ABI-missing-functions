@@ -163,3 +163,17 @@ And now by inspecting the ABI we get
 ```
 
 ![image](abi1.PNG)	![image](abi2.PNG)
+
+Where the most *common* functions of an ERC20 token are observed.
+
+Now, it is indeed possible to create the appropriate instance of the contract:
+
+```cmd
+>var interfaz = '0xcb9a11afdc6bdb92e4a6235959455f28758b34ba'
+undefined 
+>var token = '0x0000000000085d4780B73119b644AE5ecd22b376'
+undefined 
+>var contrato = new web3.eth.Contract(abi, token)
+undefined 
+>_
+```
