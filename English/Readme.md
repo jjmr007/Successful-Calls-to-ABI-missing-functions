@@ -142,3 +142,6 @@ There is an address type variable called "*implementaton*" (_impl) that is only 
  - ii.- In another variable called *result*, the result of calling the implementation contract and executing the orders that are in ptr **is collected**, but, instead of doing it according to the **_call_** command, **delegatecall** executes everything that it has to do as if the contract that does the things is the invoker, and everything that is written and every state that is changed is done on the invoking contract, and not on the invoked one. This is masterfully explained in the note that [CENTER](https://medium.com/centre-blog/designing-an-upgradeable-ethereum-contract-3d850f637794) prepared that essentially for this innovative strategy, and that without a doubt is an advance in the state of the art of these financial technologies.
 
    - The important thing to rescue here is that when a contract invokes the execution of one function of another contract by means of the **delegatecall** command, all the changes of state, everything that is written, every fund that is received, arrives, is written and updated **_in the invoker contract_**, *not in the invoked one*!
+
+   ![image](delegatecall.PNG)
+
