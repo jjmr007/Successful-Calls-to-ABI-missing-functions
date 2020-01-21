@@ -327,3 +327,13 @@ In this case, the contract that invokes the USD-Coin token is called "FiatTokenP
     }
   }
 ```
+
+Which essentially does the same as in the case of Trust-Token. Fortunately the value of the address of the implementation contract was invoked in the contract construction function and it must be admitted, that they could have complicated things a lot more for the curious newbies. This implementation address is:
+
+
+```cmd
+>var implementation = '0x0882477e7895bdc5cea7cb1552ed914ab157fe56'
+undefined 
+>_
+```
+
