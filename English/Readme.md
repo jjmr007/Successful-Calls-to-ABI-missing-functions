@@ -183,3 +183,14 @@ And we can get the *executable* methods from the token through the interface:
 ```cmd
 >contract.methods
 ```
+
+There is another way of doing this by using [MyEtherWallet](https://www.myetherwallet.com/access-my-wallet) where, when we start the Metamask wallet, we go to the contracts section, we place the token addres and in the ABI section, we place the .json data of the implementation contract (taking care of having chosen the correct network , in this case MAIN):
+
+![image](MyEth1.PNG)
+![image](MyEth2.PNG)
+![image](MyEth3.PNG)
+![image](MyEth4.PNG)
+![image](MyEth5.PNG)
+![image](MyEth6.PNG)
+![image](MyEth7.PNG)
+
