@@ -125,7 +125,7 @@ function() external payable {
     }
 ```
 
-Existe una variable de tipo address llamada "*implementaton*" (_impl) que solo es tomada en cuenta si es distinta de cero (es decir si ha sido definida) y que se supone, **se trata de otro contrato** y que ejecuta una serie de instrucciones a nivel de **_assembly_**, y que básicamente lo que hace es tomar la data que se le esta instruyendo ejecutar y la esta ejecutando mediante el [comando operaciopnal](https://ethervm.io/) **_DELEGATECALL_**.
+Existe una variable de tipo address llamada "*implementation*" (_impl) que solo es tomada en cuenta si es distinta de cero (es decir si ha sido definida) y que se supone, **se trata de otro contrato** y que ejecuta una serie de instrucciones a nivel de **_assembly_**, y que básicamente lo que hace es tomar la data que se le esta instruyendo ejecutar y la esta ejecutando mediante el [comando operaciopnal](https://ethervm.io/) **_DELEGATECALL_**.
 
 Las instrucciones de *Assembly* mas o menos estan instruyendo lo siguiente:
 
