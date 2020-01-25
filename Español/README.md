@@ -498,7 +498,7 @@ C:\Users\MiUsuario\CarpetaLocal\Delegate >
 []
 ```
 
-Esto significa que la respuesta se trata de un arreglo que esta vacío. Es decir, que nunca se ha ejecutado la función *setDelegate* desde el día que el contrato fue desplegado, si quiera una vez. De lo que se deduce que el valor del parámetro *delegate* es `address(0)`. Nótese que la función *setDelegate* sólo puede ejecutarla el propietario del contrato, debido a la instrucción: `require (msg.sender == owner);` que el contrato contiene en su línea 776.
+Esto significa que (al menos a la fecha en que esta inspección se realizó, el 25 de enero de 2020) la respuesta nos devuelve un arreglo que esta vacío. Es decir, que nunca se ha ejecutado la función *setDelegate* desde el día que el contrato fue desplegado, si quiera una vez. De lo que se deduce que el valor del parámetro *delegate* es `address(0)`. Nótese que la función *setDelegate* sólo puede ejecutarla el propietario del contrato, debido a la instrucción: `require (msg.sender == owner);` que el contrato contiene en su línea 776.
 
 Podemos estar seguros que se trata de un arreglo vacío al contrastar el caso con el parámetro que devuelve el rastreo del evento *FeeChange* que se emite cada vez que se ejecuta la función *setFeeParameters* (igualmente restringida sólo al dueño del contrato). Por ejemplo, si creamos un nuevo archivo JavaScript, por ejemplo `fee.js` cambiando la última instrucción respecto de `app.js` por:
 
@@ -591,4 +591,4 @@ Lo cual advierte que apenas 1 hora después de desplegarse el contrato (en el bl
 
 Es de notar que las transacciones que provocan la emisión de los eventos *FeeChange*, se originan de la invocación de un contrato diferente a **EURSToken**: Un contrato [**_Wallet_**](https://etherscan.io/address/0x2ebbbc541e8f8f24386fa319c79ceda0579f1efb#code), el cual ejecuta una transacción genérica: *confirm* la cual invoca el valor de un mapa con una pre-imagen igual a un valor hash cuya imagen son los datos de una cierta transacción, que a su vez puede llamar a otro u otros contratos. *Wallet* es un tipo de contrato para manejar transacciones de manera indirecta y protegida, por parte de un grupo de propietarios, de tal modo de ofuscar los datos de tales transacciones.
 
- - 10.3 **La Innovación de la Función _delegatedTransfer_**:
+ - 10.3 **La Innovación de la Función _delegatedTransfer_** : 
