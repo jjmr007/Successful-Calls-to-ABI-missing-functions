@@ -534,3 +534,72 @@ EursToken.getPastEvents(
 )
 
 ```
+
+At executing:
+
+```cmd
+C:\Users\MyUser\LocalFolder\Delegate >node fee
+
+```
+
+The following answer is obtained:
+
+```cmd
+C:\Users\MyUser\LocalFolder\Delegate > 
+[
+  {
+    address: '0xdB25f211AB05b1c97D595516F45794528a807ad8',
+    blockHash: '0xbf9eea602be3959afc5e7cae404dc5d16c10f64f9f7a4b490fb6887cc6fc1edf',
+    blockNumber: 5835461,
+    logIndex: 83,
+    removed: false,
+    transactionHash: '0xffafe1e2aae3fd207ca5d15a7aed2f5498b3062f54cefa5fce05e597c8b08407',
+    transactionIndex: 158,
+    id: 'log_19305eb1',
+    returnValues: Result {
+      '0': '50',
+      '1': '0',
+      '2': '0',
+      '3': '0',
+      fixedFee: '50',
+      minVariableFee: '0',
+      maxVariableFee: '0',
+      variableFeeNumerator: '0'
+    },
+    event: 'FeeChange',
+    signature: '0x650bf5314bb5924368ffebaf7dffcfaa4a0f99c2ab08264c26bf0547f8c459e9',
+    raw: {
+      data: '0x0000000000000000000000000000000000000000000000000000000000000032000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
+      topics: [Array]
+    }
+  },
+  {
+    address: '0xdB25f211AB05b1c97D595516F45794528a807ad8',
+    blockHash: '0xcd33aaa4fd037ad1c95939b7ac4a4980a11b7a90bf7a11a40ddf3071e2a60ff4',
+    blockNumber: 8010430,
+    logIndex: 8,
+    removed: false,
+    transactionHash: '0x427b89f50d289143e1381a225366d1a36f41637a3c8290dd1057fa941fd0d436',
+    transactionIndex: 14,
+    id: 'log_d07a5910',
+    returnValues: Result {
+      '0': '0',
+      '1': '0',
+      '2': '0',
+      '3': '0',
+      fixedFee: '0',
+      minVariableFee: '0',
+      maxVariableFee: '0',
+      variableFeeNumerator: '0'
+    },
+    event: 'FeeChange',
+    signature: '0x650bf5314bb5924368ffebaf7dffcfaa4a0f99c2ab08264c26bf0547f8c459e9',
+    raw: {
+      data: '0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
+      topics: [Array]
+    }
+  }
+]
+
+```
+
