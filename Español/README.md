@@ -26,7 +26,7 @@ A continuación vamos a inspeccionar estos contratos a través del entorno [NODE
 
 Si alguna de estas consultas falla, lo más probable es que la instalación es requerida.
 
-#### I.- El Caso de [True-USD](https://etherscan.io/address/0x0000000000085d4780b73119b644ae5ecd22b376#code)
+### I.- El Caso de [True-USD](https://etherscan.io/address/0x0000000000085d4780b73119b644ae5ecd22b376#code)
 
 A continuación podemos proceder del siguiente modo:
 
