@@ -422,7 +422,7 @@ Promise { <pending> }
 > 0
 ```
 
-### El Caso de [EURS-Stasis](https://etherscan.io/address/0xdb25f211ab05b1c97d595516f45794528a807ad8#code)
+### III.- El Caso de [EURS-Stasis](https://etherscan.io/address/0xdb25f211ab05b1c97d595516f45794528a807ad8#code)
 
 Finalmente abordaremos el caso de EURS - Stasis. Este contrato que posee un plan de actualización con tecnología intermedia, introduce una gran innovación: la transferencia con delegación por firmas; la cual tendría la capacidad incidentalmente de resolver los inconvenientes que generan implícitamente las funciones "*approve*" y "*transferFrom*", haciendo de ellas (junto con su mapeo "*allowances*") objetos de programación obsoletos en un token ERC20.
 
