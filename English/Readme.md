@@ -37,7 +37,7 @@ Then we can proceed as follows:
 N ° 1 We will enter the node console, as our execution environment for our web3 package:
 
 ```cmd
-C:\Users\MiUsuario\CarpetaLocal\>node
+C:\Users\MyUser\LocalFolder\>node
 >_
 ```
 
