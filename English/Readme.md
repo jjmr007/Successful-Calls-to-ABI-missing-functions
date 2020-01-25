@@ -430,3 +430,48 @@ Likewise, the contract has a "**_delegate_**" variable, which is the address of 
 
 The **_delegatable_** modifier has the following instructions:
 
+```js
+  modifier delegatable {
+    if (delegate == address (0)) {
+      require (msg.value == 0); // Non payable if not delegated
+      _;
+    } else {
+      assembly {
+        // Save owner
+        let oldOwner := sload (owner_slot)
+
+        // Save delegate
+        let oldDelegate := sload (delegate_slot)
+
+        // Solidity stores address of the beginning of free memory at 0x40
+        let buffer := mload (0x40)
+
+        // Copy message call data into buffer
+        calldatacopy (buffer, 0, calldatasize)
+
+        // Lets call our delegate
+        let result := delegatecall (gas, oldDelegate, buffer, calldatasize, buffer, 0)
+
+        // Check, whether owner was changed
+        switch eq (oldOwner, sload (owner_slot))
+        case 1 {} // Owner was not changed, fine
+        default {revert (0, 0) } // Owner was changed, revert!
+
+        // Check, whether delegate was changed
+        switch eq (oldDelegate, sload (delegate_slot))
+        case 1 {} // Delegate was not changed, fine
+        default {revert (0, 0) } // Delegate was changed, revert!
+
+        // Copy returned value into buffer
+        returndatacopy (buffer, 0, returndatasize)
+
+        // Check call status
+        switch result
+        case 0 { revert (buffer, returndatasize) } // Call failed, revert!
+        default { return (buffer, returndatasize) } // Call succeeded, return
+      }
+    }
+  }
+
+```
+
