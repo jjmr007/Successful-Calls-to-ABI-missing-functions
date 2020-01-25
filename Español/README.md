@@ -611,4 +611,10 @@ Lo cual advierte que apenas 1 hora después de desplegarse el contrato (en el bl
 
 Es de notar que las transacciones que provocan la emisión de los eventos *FeeChange*, se originan de la invocación de un contrato diferente a **EURSToken**: Un contrato [**_Wallet_**](https://etherscan.io/address/0x2ebbbc541e8f8f24386fa319c79ceda0579f1efb#code), el cual ejecuta una transacción genérica: *confirm*; la cual invoca el valor de un mapa con una pre-imagen igual a un valor hash cuya imagen son los datos de una cierta transacción (que se borran tras le ejecución), que a su vez puede llamar a otro u otros contratos. *Wallet* es un tipo de contrato para manejar transacciones de manera indirecta y protegida, por parte de un grupo de propietarios, de tal modo de ofuscar los datos de tales transacciones y exigir autorización apropiada para cada transacción de interés.
 
-10.3 **La Innovación de la Función _delegatedTransfer_** : 
+10.3 **La Innovación de la Función _delegatedTransfer_** : Muchas veces la innovación consiste en cambios sencillos que no se habían tomado en serio con anterioridad, pero cuando se implementan, destacan cuan relevantes son para la adopción de una tecnología.
+
+Si la intención de usar monedas estables, es una adopción que de algún modo irrumpa la barrera del efecto de red, necesitamos que el usuario final pueda utilizar esta tecnolgía sin requerir de él conocimientos avanzados en lo que esta sucediendo dentro de su aplicación. Y una de esas barreras es la necesidad de pagar comisiones de *gasolina* en moneda ethereum, para poder movilizar fondos que existen en otra moneda totalmente diferente: euros y dólares!
+
+¿Como le explicamos al ciudadano común que ésos dólares que desea enviar, no se moverán de su cartera a no ser que adquiera y coloque en su misma "*address*" una cantidad suficiente de *ethers*? Es decir, no bastó toda la travesia de adquirir los *tókens* en moneda estable (ya sean dólares o euros), además debe hacer otra compleja tramitación para adquirir una criptomoneda, que en principio ni le interesa o no le tiene porque interesar para nada. Y todo esto para comprar una revista, un cafe o pagar su factura de electricidad.
+
+
