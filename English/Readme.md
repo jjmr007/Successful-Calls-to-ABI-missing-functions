@@ -301,7 +301,7 @@ Promise { <pending> }
 > 42000000000000000000000000
 ``` 
 
-### The [USD-Coin](https://etherscan.io/address/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48#code) Case
+### II.- The [USD-Coin](https://etherscan.io/address/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48#code) Case
 
 Let's move on to a much more evolved strategy case for upgradeability: The case of [Circle](https://www.circle.com/en/usdc)/[Centre](https://www.centre.io/) team. This team of developers had already learned the hard lessons of their predecessors and built a much simpler, more compact and versatile contract.
 
@@ -431,7 +431,7 @@ Promise { <pending> }
 > 0
 ```
 
-### The [EURS-Stasis](https://etherscan.io/address/0xdb25f211ab05b1c97d595516f45794528a807ad8#code) Case
+### III.- The [EURS-Stasis](https://etherscan.io/address/0xdb25f211ab05b1c97d595516f45794528a807ad8#code) Case
 
 N ° 10 Finally, we will address the case of EURS - Stasis. This contract, which has an update plan with intermediate technology, introduces a great innovation: the transfer with delegation by the means of signatures; which would have the capacity incidentally to solve the inconveniences that implicitly generate the "*approve*" and "*transferFrom*" functions, making them (together with their "*allowances*" mapping) obsolete programming objects in an ERC20 token.
 
