@@ -51,13 +51,13 @@ undefined
 >_
 ```
 
-**N° 3** The following is to find the URL of some service provider of remote connection to the ethereum network.
+**N° 3** The following is to find the URL of some service provider of remote connection to the Ethereum network.
 
 One way to do this is through the services of the [INFURA](https://infura.io/) company.
 
 For low traffic cases and test environments, a completely free link can be obtained for both the main network and most test networks.
 
-You have to make a simple subscription and register a project. In return, the platform gives us a URL that will give us indirect access to the ethereum network. This address will have the form of:
+You have to make a simple subscription and register a project. In return, the platform gives us a URL that will give us indirect access to the Ethereum network. This address will have the form of:
 
 ```url
 mainnet.infura.io/v3/PROJECT_KEY_NUMBER
@@ -73,13 +73,13 @@ undefined
 >_
 ```
 
-**N° 5** We now create an instance of the contract that we want to inspect. But there is a small problem: to rebuild this instance we need the address where said contract resides in the blocchain and also, the ABI.json file of the contract.
+**N° 5** We now create an instance of the contract that we want to inspect. But there is a small problem: to rebuild this instance we need the address where said contract resides in the blockchain and also, the ABI.json file of the contract.
 
 But if we extract the ABI.json element from the contract directly deployed from, say, [True-USD](https://etherscan.io/address/0x0000000000085d4780b73119b644ae5ecd22b376#code), we will not be able to execute any function worthy of an ERC20 token. How we do?
 
 In the normal case we would do the following: we use some appropriate browser such as [Etherscan](https://etherscan.io/) and look for the contract of our interest. If this seems the same than looking for a needle in a haystack, it is possible to do so by choosing the "Tokens" page, looking the most famous ones. We can also locate the explorer page of a particular token, by finding it on the [CoinMArketCap](https://coinmarketcap.com/) page.
 
-The remarkable thing about all this information is that it is public. So the "ABI contract" can be copied directly from the page where the contract is exposed in etherscan (as long as the owner of the code has [verified](https://github.com/jjmr007/Deploying-and-Verifying-a-Contract-using-Remix-and-Etherscan) the contract).
+The remarkable thing about all this information is that it is public. So the "ABI contract" can be copied directly from the page where the contract is exposed in Etherscan (as long as the owner of the code has [verified](https://github.com/jjmr007/Deploying-and-Verifying-a-Contract-using-Remix-and-Etherscan) the contract).
 
 Once the ABI data is copied, we go to the console and declare it:
 
@@ -105,7 +105,7 @@ N ° 6 The first thing that catches our attention is that it is a contract that 
 
 It was used a special application to calculate "[vanity addresses](https://github.com/MyEtherWallet/VanityEth)" that what they do is to generate as in a mining software, multiple private keys for externally controlled addresses (EOA) in order to deploy a contract several times, until the contract address deployed had the amount of zeros that the algorithm can afford or the user is willing to wait for them to be generated. This was carried out by the [Trust-Token](https://www.trusttoken.com/) company in order to grant an extra security feature to its contracts.
 
-On the other hand, the contract does not have the name "True-USD", that was in the past! Now it is called: "OwnedUpgradeabilityProxy" and is the sequence of several code blocks in the form of abstract contracts inherited one after another, until the compilable contract  has the presence of a function without any name, known as [FALLBACK-FUNCTION](https://solidity.readthedocs.io/en/v0.4.23/contracts.html#fallback-function): a function that must be of external access and with no arguments!
+On the other hand, the contract does not have the name "True-USD", which was in the past! Now it is called: "OwnedUpgradeabilityProxy" and is the sequence of several code blocks in the form of abstract contracts inherited one after another, until the compilable contract  has the presence of a function without any name, known as [FALLBACK-FUNCTION](https://solidity.readthedocs.io/en/v0.4.23/contracts.html#fallback-function): a function that must be of external access and with no arguments!
 
 According to the solidity documentation:
 
@@ -136,7 +136,7 @@ function() external payable {
     }
 ```
 
-There is an address type variable called "*implementaton*" (_impl) that is only taken into account if it is non-zero (that is, if it has been defined) and **is assumed to be another contract** and that executes a series of instructions at "**_assembly_**" level, and what basically does is to take the data that is being instructed to be executed and is executed by means of the **_DELEGATECALL_** [operational command](https://ethervm.io/).
+There is an address type variable called "*implementation*" (_impl) that is only taken into account if it is non-zero (that is, if it has been defined) and **is assumed to be another contract** and that executes a series of instructions at "**_assembly_**" level, and what basically does is to take the data that is being instructed to be executed and is executed by means of the **_DELEGATECALL_** [operational command](https://ethervm.io/).
 
 *Assembly* instructions are more or less instructing the following:
 
@@ -147,11 +147,11 @@ There is an address type variable called "*implementaton*" (_impl) that is only 
 
    ![image](delegatecall.PNG)
 
- - iii.- This means that it is not necessary for the unnamed function to return any arguments, since the *returndatacopy* assembly instruction will store in memory everything that needs to be recovered! (So it is unnecessary for the fallback function to explicitly return any argument, since these are housed in the volatile memory of the ethereum virtual machine and can be rescued through the interface that the user is using).
+ - iii.- This means that it is not necessary for the unnamed function to return any arguments, since the *returndatacopy* assembly instruction will store in memory everything that needs to be recovered! (So it is unnecessary for the fallback function to explicitly return any argument, since these are housed in the volatile memory of the Ethereum virtual machine and can be rescued through the interface that the user is using).
 
 All this means that if the *implementation* function to be executed is replaced; without anyone even noticing, the logic that will begin to execute the contract will have been updated on, without altering the data or the balance values of any of the users!
 
-**N° 7** So in order to properly execute the [True-USD](https://etherscan.io/address/0x0000000000085d4780b73119b644ae5ecd22b376#code) contract, all we need is to rescue the ABI from the implementation function, unless we want to execute some native control function of the contract in question, such as modifying the contract of implementation or change the contract owner. The value of the address of the implementation contract in the case of Trust-USD is public and [easily fetchable](https://etherscan.io/address/0x0000000000085d4780b73119b644ae5ecd22b376#readContract) as "*implementation*", and its value is `0xcb9a11afdc6bdb92e4a6235959455f28758b34ba`. Therefore, the [ABI](https://etherscan.io/address/0xcb9a11afdc6bdb92e4a6235959455f28758b34ba#code) of the implementation contract is easily salvageable. This time it is much more extensive data:
+**N° 7** So in order to properly execute the [True-USD](https://etherscan.io/address/0x0000000000085d4780b73119b644ae5ecd22b376#code) contract, all we need is to rescue the ABI from the implementation function, unless we want to execute some native control function of the contract in question, such as modifying the contract of implementation or change the contract owner. The value of the address of the implementation contract in the case of Trust-USD is public and [easily fetch able](https://etherscan.io/address/0x0000000000085d4780b73119b644ae5ecd22b376#readContract) as "*implementation*", and its value is `0xcb9a11afdc6bdb92e4a6235959455f28758b34ba`. Therefore, the [ABI](https://etherscan.io/address/0xcb9a11afdc6bdb92e4a6235959455f28758b34ba#code) of the implementation contract is easily salvageable. This time it is much more extensive data:
 
 ```cmd
 >var abi = [{"constant":true,"inputs":[],"name":"burnMin","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"pure","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"owner","type":"address"},{"name":"spender","type":"address"}],"name":"delegateAllowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_minimumGasPriceForFutureRefunds","type":"uint256"}],"name":"setMinimumGasPriceForFutureRefunds","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"sponsorGas","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"value","type":"uint256"},{"name":"origSender","type":"address"}],"name":"delegateApprove","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_ownable","type":"address"}],"name":"reclaimContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"rounding","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"pure","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"pure","type":"function"},{"constant":true,"inputs":[],"name":"minimumGasPriceForFutureRefunds","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"mint","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"burn","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"who","type":"address"}],"name":"delegateBalanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"from","type":"address"},{"name":"to","type":"address"},{"name":"value","type":"uint256"},{"name":"origSender","type":"address"}],"name":"delegateTransferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"claimOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_min","type":"uint256"},{"name":"_max","type":"uint256"}],"name":"setBurnBounds","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"addedValue","type":"uint256"},{"name":"origSender","type":"address"}],"name":"delegateIncreaseApproval","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"minimumGasPriceForRefund","outputs":[{"name":"result","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"burnMax","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"paused","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"pure","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_subtractedValue","type":"uint256"}],"name":"decreaseApproval","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_who","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"delegateTotalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"registry","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"remainingGasRefundPool","outputs":[{"name":"length","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"},{"name":"_to","type":"address"}],"name":"reclaimToken","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"subtractedValue","type":"uint256"},{"name":"origSender","type":"address"}],"name":"delegateDecreaseApproval","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"pure","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"}],"name":"reclaimEther","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"to","type":"address"},{"name":"value","type":"uint256"},{"name":"origSender","type":"address"}],"name":"delegateTransfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_registry","type":"address"}],"name":"setRegistry","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_account","type":"address"}],"name":"wipeBlacklistedAccount","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"sponsorGas2","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_addedValue","type":"uint256"}],"name":"increaseApproval","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_who","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"pendingOwner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_index","type":"uint256"}],"name":"gasRefundPool","outputs":[{"name":"gasPrice","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_who","type":"address"},{"name":"_attribute","type":"bytes32"},{"name":"_value","type":"uint256"}],"name":"syncAttributeValue","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"account","type":"address"},{"indexed":false,"name":"balance","type":"uint256"}],"name":"WipeBlacklistedAccount","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"registry","type":"address"}],"name":"SetRegistry","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newMin","type":"uint256"},{"indexed":false,"name":"newMax","type":"uint256"}],"name":"SetBurnBounds","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"burner","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Burn","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Mint","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"previousOwner","type":"address"},{"indexed":true,"name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"}]
@@ -186,7 +186,7 @@ And we can get the *executable* methods from the token through the interface:
 >contract.methods
 ```
 
-There is another way of doing this by using [MyEtherWallet](https://www.myetherwallet.com/access-my-wallet) where, when we start the Metamask wallet, we go to the contracts section, we place the token addres and in the ABI section, we place the .json data of the implementation contract (taking care of having chosen the correct network , in this case MAIN):
+There is another way of doing this by using [MyEtherWallet](https://www.myetherwallet.com/access-my-wallet) where, when we start the Metamask wallet, we go to the contracts section, we place the token address and in the ABI section, we place the .json data of the implementation contract (taking care of having chosen the correct network , in this case MAIN):
 
 
 #### Setting the contract parameters (the contract address and the ABI interface):
@@ -219,7 +219,7 @@ There is another way of doing this by using [MyEtherWallet](https://www.myetherw
 ![image](MyEth7.PNG)
 
 
-From the console, similar methods can be try:
+From the console, similar methods can be trying:
 
 ```cmd
 >contract.methods.name().call(function(err, result) { console.log(result) })
@@ -233,7 +233,7 @@ Promise { <pending> }
 > 144003798740000000000000000
 ``` 
 
-The reason for passing the results of *call()* to a function and printing these results on the console is due to the asynchronous nature of web3.eth which javascript is able to handle.
+The reason for passing the results of *call()* to a function and printing these results on the console is due to the asynchronous nature of web3.eth which JavaScript is able to handle.
 
 ```cmd
 >contract.methods.decimals().call(function(err, result) { console.log(result) })
@@ -311,7 +311,7 @@ undefined
 >_
 ```
 
-But this time, to discover the ABI we need the interface, which this team had the cunning to keep "*internal*", a private variable. Although certainly nothing in the ethereum blockchain is hidden, there are ways to complicate the lives of upstarts and curious.
+But this time, to discover the ABI we need the interface, which this team had the cunning to keep "*internal*", a private variable. Although certainly nothing in the Ethereum blockchain is hidden, there are ways to complicate the lives of upstarts and curious.
 
 In this case, the contract that invokes the USD-Coin token is called "FiatTokenProxy", and its "*Fallback-Function*" makes an indirect call to an internal (private) function that is the one that contains the assembly code, with a little better efficiency design (thanks also to the [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-labs/blob/master/initializer_contracts_with_args/contracts/Proxy.sol) developers) and containing the following:
 
@@ -356,7 +356,7 @@ In this case, the contract that invokes the USD-Coin token is called "FiatTokenP
   }
 ```
 
-Which essentially does the same as in the case of Trust-Token. Fortunately the value of the address of the implementation contract was invoked in the contract construction function and it must be admitted, that they could have complicated things a lot more for the curious newbies. This implementation address is:
+This essentially does the same as in the case of Trust-Token. Fortunately the value of the address of the implementation contract was invoked in the contract construction function and it must be admitted, that they could have complicated things a lot more for the curious newbie's. This implementation address is:
 
 
 ```cmd
@@ -524,7 +524,7 @@ C:\Users\MyUser\LocalFolder\Delegate >node app.js
 
 ```
 
-Which returns this strange answer:
+This returns this strange answer:
 
 ```cmd
 C:\Users\MyUser\LocalFolder\Delegate > 
@@ -616,7 +616,7 @@ C:\Users\MyUser\LocalFolder\Delegate >
 
 ```
 
-Which warns that just 1 hour after the contract was deployed (in block No. `5835461`, on June 22, 2018), commission fees were established for executing delegated transfers. Just one year later (in block N ° `8010430`, on June 22, 2019), the STASIS team makes the decision to set to zero all commissions. How they achieve such a feat, it is already part of a business strategy that is beyond the scope of this analysis.
+This indicate us that just 1 hour after the contract was deployed (in block No. `5835461`, on June 22, 2018), commission fees were established for executing delegated transfers. Just one year later (in block N ° `8010430`, on June 22, 2019), the STASIS team makes the decision to set to zero all commissions. How they achieve such a feat, it is already part of a business strategy that is beyond the scope of this analysis.
 
 Note that the transactions that cause the issuance of the *FeeChange* events originate from the invocation of a contract distinct than **EURSToken**: A [**_Wallet_**](https://etherscan.io / address / 0x2ebbbc541e8f8f24386fa319c79ceda0579f1efb # code) contract, which executes a generic transaction: *confirm*; which invokes the value of a map with a pre-image equal to a hash value and the map image is the data of certain transaction (data deleted after the execution), which in turn can call another or other contracts. *Wallet* is a type of contract to handle transactions in an indirect and protected manner, by a group of owners, in such a way to obfuscate the data of such transactions and require the appropriate authorization for each transaction of interest.
 
