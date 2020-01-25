@@ -420,4 +420,13 @@ Promise { <pending> }
 
 ### The [EURS-Stasis](https://etherscan.io/address/0xdb25f211ab05b1c97d595516f45794528a807ad8#code) Case
 
-N ° 10 Finally, we will address the case of EURS - Stasis. Since it has an update plan with intermediate technology, but introduces a great innovation: the delegated transfers with signatures; which would have the unexpected capacity to solve the inconveniences that the "*approve*" and "*transferFrom*" functions implicitly generate, making them (together with their "*allowances*" mapping) obsolete programming objects in an future ERC20 token.
+N ° 10 Finally, we will address the case of EURS - Stasis. This contract, which has an update plan with intermediate technology, introduces a great innovation: the transfer with delegation by the means of signatures; which would have the capacity incidentally to solve the inconveniences that implicitly generate the "*approve*" and "*transferFrom*" functions, making them (together with their "*allowances*" mapping) obsolete programming objects in an ERC20 token.
+
+N° 1 **Upgrade Strategy** : In the contract there is a modifier called "*delegatable*", which affects all the important functions of the contract. Likewise, the contract has an unnamed function (*fallback*) that is logically affected by the modifier, in case the contract to which the delegation points out, has functions whose names are new and have not been foreseen in the current contract.
+
+Likewise, the contract has a "**_delegate_**" variable, which is the address of the delegation or the delegated contract. While this variable retains its initial value (which by default is `address (0)`), the unnamed function, if invoked, will always abort its execution; and all the functions of the contract that invoke the modifier, will behave just as the contract in question indicates.
+
+**_delegate_** is an "*internal*" variable, which means that it is not visible to the public, nor is there a direct way to consult it.
+
+The **_delegatable_** modifier has the following instructions:
+
