@@ -611,4 +611,4 @@ Lo cual advierte que apenas 1 hora después de desplegarse el contrato (en el bl
 
 Es de notar que las transacciones que provocan la emisión de los eventos *FeeChange*, se originan de la invocación de un contrato diferente a **EURSToken**: Un contrato [**_Wallet_**](https://etherscan.io/address/0x2ebbbc541e8f8f24386fa319c79ceda0579f1efb#code), el cual ejecuta una transacción genérica: *confirm*; la cual invoca el valor de un mapa con una pre-imagen igual a un valor hash cuya imagen son los datos de una cierta transacción (que se borran tras le ejecución), que a su vez puede llamar a otro u otros contratos. *Wallet* es un tipo de contrato para manejar transacciones de manera indirecta y protegida, por parte de un grupo de propietarios, de tal modo de ofuscar los datos de tales transacciones y exigir autorización apropiada para cada transacción de interés.
 
- - 10.3 **La Innovación de la Función _delegatedTransfer_** : 
+10.3 **La Innovación de la Función _delegatedTransfer_** : 
