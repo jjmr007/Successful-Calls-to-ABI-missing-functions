@@ -524,7 +524,7 @@ C:\Users\MiUsuario\CarpetaLocal\Delegate >node fee
 
 Se obtiene el siguiente resultado:
 
-```cmd
+```js
 C:\Users\MiUsuario\CarpetaLocal\Delegate > 
 [
   {
