@@ -170,7 +170,7 @@ undefined
 >_
 ```
 
-Y se pueden obtener los *métodos* ejecutables dese el token mediante la interfaz:
+Y se pueden obtener los *métodos* ejecutables desde el token mediante la interfaz:
 
 ```cmd
 >contrato.methods
