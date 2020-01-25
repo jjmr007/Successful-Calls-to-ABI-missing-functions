@@ -503,3 +503,32 @@ EursToken.getPastEvents(
 )
 
 ```
+
+Finally, from the command console we execute:
+
+```cmd
+C:\Users\MiUsuario\CarpetaLocal\Delegate >node app.js
+
+```
+
+Which returns this strange answer:
+
+```cmd
+C:\Users\MiUsuario\CarpetaLocal\Delegate > 
+[]
+```
+
+
+
+```js
+
+EursToken.getPastEvents(
+  'FeeChange',
+  {
+    fromBlock: 5835251,
+    toBlock: 'latest'
+  },
+  (error, evento) => { console.log(evento) }
+)
+
+```
