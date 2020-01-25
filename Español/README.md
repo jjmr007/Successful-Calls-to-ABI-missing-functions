@@ -515,6 +515,13 @@ EursToken.getPastEvents(
 
 ```
 
+Al ejecutar:
+
+```cmd
+C:\Users\MiUsuario\CarpetaLocal\Delegate >node fee
+
+```
+
 Se obtiene el siguiente resultado:
 
 ```cmd
@@ -579,5 +586,9 @@ C:\Users\MiUsuario\CarpetaLocal\Delegate >
 ]
 
 ```
+
+Lo cual advierte que apenas 1 hora despues de desplegarse el contrato (en el bloque N° `5835251`, el 22 de junio de 2018), se establecieron tarifas de comisión por ejecutar transferencias delegadas. Justamente un año despues (en el bloque N° `8010430`, el 22 de junio de 2019), el equipo de STASIS toma la decisión de establecer a cero todas las comisiones. De como logran tal hazaña, ya es parte de una estrategia de negocios que escapa del alcance de esta publicación.
+
+Es de notar que las transacciones que provocan la emisión de los eventos *FeeChange*, se originan de la invocación de un contrato diferente a EURSToken: Un contrato [**_Wallet_**](https://etherscan.io/address/0x2ebbbc541e8f8f24386fa319c79ceda0579f1efb#code), el cual ejecuta una transacción genérica: *confirm* la cual invoca el valor de un mapa con una imagen hash de una cierta transacción, que a su vez puede llamar a otro u otros contratos. *Wallet* es un tipo de contrato para manejar transacciones de manera indirecta y protegida, por parte de un grupo de propietarios, de tal modo de ofuscar los datos de tales transacciones.
 
  - 10.3
