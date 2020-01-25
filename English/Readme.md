@@ -99,7 +99,7 @@ Then all the content is displayed in an orderly manner and it will be more or le
 
 As expected, nothing of "transfer" or "balanceOf". So, what can we do now?
 
-N ° 6 The first thing that catches our attention is that it is a contract that has already undergone an update. His address number strangely and inexplicably has a sequence of 11 zeros! How did they achieve such eccentricity?
+N ° 6 The first thing that catches our attention is that it is a contract that has already undergone an update. Its address number strangely and inexplicably has a sequence of [11 zeros!](https://etherscan.io/address/0x0000000000085d4780b73119b644ae5ecd22b376#code) How did they achieve such eccentricity?
 
 It was used a special application to calculate "[vanity addresses](https://github.com/MyEtherWallet/VanityEth)" that what they do is to generate as in a mining software, multiple private keys for externally controlled address (EOA) in order to deploy a contract several times, until the contract address deployed had the amount of zeros that the algorithm can afford or the user is willing to wait for them to be generated. This was carried out by the [Trust-Token](https://www.trusttoken.com/) company in order to grant an extra security feature to its contract.
 
