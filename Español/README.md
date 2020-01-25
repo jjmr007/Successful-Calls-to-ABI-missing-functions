@@ -402,13 +402,13 @@ Promise { <pending> }
 
 Finalmente abordaremos el caso de EURS - Stasis. Este contrato que posee un plan de actualización con tecnología intermedia, introduce una gran innovación: la transferencia con delegación por firmas; la cual tendría la capacidad incidentalmente de resolver los inconvenientes que generan implícitamente las funciones "*approve*" y "*transferFrom*", haciendo de ellas (junto con su mapeo "*allowances*") objetos de programación obsoletos en un token ERC20.
 
-N° 1 **Estrategia de Actualización**: En el contrato existe un modificador llamado "*delegateble*", que afecta a todas las funciones importantes del contrato. Asimismo, el contrato posee una función sin nombre (*fallback*) que lógicamente es afectada por el modificador, en caso que el contrato al que apunta la delegación, posea funciones cuyos nombres sean nuevos y no hayan sido previstos en el contrato actual.
+N° 1 **Estrategia de Actualización**: En el contrato existe un modificador llamado "*delegatable*", que afecta a todas las funciones importantes del contrato. Asimismo, el contrato posee una función sin nombre (*fallback*) que lógicamente es afectada por el modificador, en caso que el contrato al que apunta la delegación, posea funciones cuyos nombres sean nuevos y no hayan sido previstos en el contrato actual.
  
 Asimismo, el contrato posee una variable "**_delegate_**", la cual es la dirección de la delegación o el contrato delegado. Mientras que esta variable conserva su valor inicial (que por defecto es `address(0)`) la función sin nombre, de llegar a invocarse siempre abortará su ejecución; y todas las funciones del contrato que invocan el modificador, se comportarán justo como lo indica textualmente el contrato en cuestión.
 
 **_delegate_** es una variable "*internal*", lo que quiere decir que no es visible al público, ni hay un modo directo de consultarla.
 
-El modificador **_delegateble_** posee las siguientes instrucciones:
+El modificador **_delegatable_** posee las siguientes instrucciones:
 
 ```js
   modifier delegatable {
