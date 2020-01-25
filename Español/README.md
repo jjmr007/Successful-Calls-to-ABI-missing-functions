@@ -472,7 +472,7 @@ const url = 'https://mainnet.infura.io/v3/'+INFURA_KEY;
 const web3 = new Web3(url);
 const abi = [{"constant":false,"inputs":[],"name":"freezeTransfers","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_newOwner","type":"address"}],"name":"setOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"unfreezeTransfers","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"getFeeParameters","outputs":[{"name":"_fixedFee","type":"uint256"},{"name":"_minVariableFee","type":"uint256"},{"name":"_maxVariableFee","type":"uint256"},{"name":"_variableFeeNumnerator","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"burnTokens","outputs":[{"name":"","type":"bool"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"nonce","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"createTokens","outputs":[{"name":"","type":"bool"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_amount","type":"uint256"}],"name":"calculateFee","outputs":[{"name":"_fee","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_address","type":"address"}],"name":"flags","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newFeeCollector","type":"address"}],"name":"setFeeCollector","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_address","type":"address"},{"name":"_flags","type":"uint256"}],"name":"setFlags","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"},{"name":"_fee","type":"uint256"},{"name":"_nonce","type":"uint256"},{"name":"_v","type":"uint8"},{"name":"_r","type":"bytes32"},{"name":"_s","type":"bytes32"}],"name":"delegatedTransfer","outputs":[{"name":"","type":"bool"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_delegate","type":"address"}],"name":"setDelegate","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_fixedFee","type":"uint256"},{"name":"_minVariableFee","type":"uint256"},{"name":"_maxVariableFee","type":"uint256"},{"name":"_variableFeeNumerator","type":"uint256"}],"name":"setFeeParameters","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_feeCollector","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[],"name":"Freeze","type":"event"},{"anonymous":false,"inputs":[],"name":"Unfreeze","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"fixedFee","type":"uint256"},{"indexed":false,"name":"minVariableFee","type":"uint256"},{"indexed":false,"name":"maxVariableFee","type":"uint256"},{"indexed":false,"name":"variableFeeNumerator","type":"uint256"}],"name":"FeeChange","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"delegate","type":"address"}],"name":"Delegation","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"}];
 const EURS = '0xdB25f211AB05b1c97D595516F45794528a807ad8';
-const EursToken = new web3.eth.Contract(abi, address);
+const EursToken = new web3.eth.Contract(abi, EURS);
 EursToken.getPastEvents(
   'Delegation',
   {
@@ -488,6 +488,95 @@ Finalmente, desde la consola de comandos ejecutamos:
 
 ```cmd
 C:\Users\MiUsuario\CarpetaLocal\Delegate >node app.js
+
+```
+
+Lo cual nos retorna la extraña respuesta de:
+
+```cmd
+C:\Users\MiUsuario\CarpetaLocal\Delegate > 
+[]
+```
+
+Esto significa que la respuesta se trata de un arreglo que esta vacío. Es decir, que nunca se ha ejecutado la función *setDelegate* desde el día que el contrato fue desplegado, si quiera una vez. De lo que se deduce que el valor del parametro *delegate* es `address(0)`. Nótese que la función *setDelegate* sólo puede ejecutarla el propietario del contrato, debido a la instrucción: `require (msg.sender == owner);` que el contrato contiene en su línea 776.
+
+Podemos estar seguros que se trata de un arreglo vacío al contrastar el caso con el parámetro que devuelve el rastreo del evento *FeeChange* que se emite cada vez que se ejecuta la función *setFeeParameters* (igualmente restringida sólo al dueño del contrato). Por ejemplo, si creamos un nuevo archivo JavaScript, por ejemplo `fee.js` cambiando la última instrucción respecto de `app.js` por:
+
+```js
+
+EursToken.getPastEvents(
+  'FeeChange',
+  {
+    fromBlock: 5835251,
+    toBlock: 'latest'
+  },
+  (error, evento) => { console.log(evento) }
+)
+
+```
+
+Se obtiene el siguiente resultado:
+
+```cmd
+C:\Users\MiUsuario\CarpetaLocal\Delegate > 
+[
+  {
+    address: '0xdB25f211AB05b1c97D595516F45794528a807ad8',
+    blockHash: '0xbf9eea602be3959afc5e7cae404dc5d16c10f64f9f7a4b490fb6887cc6fc1edf',
+    blockNumber: 5835461,
+    logIndex: 83,
+    removed: false,
+    transactionHash: '0xffafe1e2aae3fd207ca5d15a7aed2f5498b3062f54cefa5fce05e597c8b08407',
+    transactionIndex: 158,
+    id: 'log_19305eb1',
+    returnValues: Result {
+      '0': '50',
+      '1': '0',
+      '2': '0',
+      '3': '0',
+      fixedFee: '50',
+      minVariableFee: '0',
+      maxVariableFee: '0',
+      variableFeeNumerator: '0'
+    },
+    event: 'FeeChange',
+    signature: '0x650bf5314bb5924368ffebaf7dffcfaa4a0f99c2ab08264c26bf0547f8c459e9',
+    raw: {
+      data: '0x0000000000000000000000000000000000000000000000000000000000000032000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000',
+      topics: [Array]
+    }
+  },
+  {
+    address: '0xdB25f211AB05b1c97D595516F45794528a807ad8',
+    blockHash: '0xcd33aaa4fd037ad1c95939b7ac4a4980a11b7a90bf7a11a40ddf3071e2a60ff4',
+    blockNumber: 8010430,
+    logIndex: 8,
+    removed: false,
+    transactionHash: '0x427b89f50d289143e1381a225366d1a36f41637a3c8290dd1057fa941fd0d436',
+    transactionIndex: 14,
+    id: 'log_d07a5910',
+    returnValues: Result {
+      '0': '0',
+      '1': '0',
+      '2': '0',
+      '3': '0',
+      fixedFee: '0',
+      minVariableFee: '0',
+      maxVariableFee: '0',
+      variableFeeNumerator: '0'
+    },
+    event: 'FeeChange',
+    signature: '0x650bf5314bb5924368ffebaf7dffcfaa4a0f99c2ab08264c26bf0547f8c459e9',
+    raw: {
+      data: '0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000',
+      topics: [Array]
+    }
+  }
+]
 
 ```
 
