@@ -399,8 +399,59 @@ N° 10 Finalmente abordaremos el caso de [EURS - Stasis](https://etherscan.io/ad
 
  - 10.1 **Estrategia de Actualizacion**: En el contrato existe un modificador llamado "*delegateble*", que afecta a todas las funciones importantes del contrato. Asimismo, el contrato posee una función sin nombre (*fallback*) que lógicamente es afectada por el modificador, en caso que el contrato al que apunta la delegación, posea funciones cuyos nombres sean nuevos y no hayan sido previstos en el contrato actual.
  
-  Asimismo, el contrato posee una variable "**_delegate_**", la cual es la dirección de la delegación o el contrato delegado.
-  
- - 10.2
+Asimismo, el contrato posee una variable "**_delegate_**", la cual es la dirección de la delegación o el contrato delegado. Mientras que esta variable conserva su valor inicial (que por defecto es `address(0)`) la función sin nombre, de llegar a invocarse siembre abortará su ejecución y todas las funciones del contrato que invocan el modificador, se comportarán justo como lo indica textualmente el contrato en cuestion.
+
+**_delegate_** es una variable "*internal*", lo que quiere decir que no es visible al público, ni hay un modo directo de consultarla.
+
+El modificador **_delegateble_** posee las siguientes instrucciones:
+
+```js
+  modifier delegatable {
+    if (delegate == address (0)) {
+      require (msg.value == 0); // Non payable if not delegated
+      _;
+    } else {
+      assembly {
+        // Save owner
+        let oldOwner := sload (owner_slot)
+
+        // Save delegate
+        let oldDelegate := sload (delegate_slot)
+
+        // Solidity stores address of the beginning of free memory at 0x40
+        let buffer := mload (0x40)
+
+        // Copy message call data into buffer
+        calldatacopy (buffer, 0, calldatasize)
+
+        // Lets call our delegate
+        let result := delegatecall (gas, oldDelegate, buffer, calldatasize, buffer, 0)
+
+        // Check, whether owner was changed
+        switch eq (oldOwner, sload (owner_slot))
+        case 1 {} // Owner was not changed, fine
+        default {revert (0, 0) } // Owner was changed, revert!
+
+        // Check, whether delegate was changed
+        switch eq (oldDelegate, sload (delegate_slot))
+        case 1 {} // Delegate was not changed, fine
+        default {revert (0, 0) } // Delegate was changed, revert!
+
+        // Copy returned value into buffer
+        returndatacopy (buffer, 0, returndatasize)
+
+        // Check call status
+        switch result
+        case 0 { revert (buffer, returndatasize) } // Call failed, revert!
+        default { return (buffer, returndatasize) } // Call succeeded, return
+      }
+    }
+  }
+
+```
+
+Básicamente lo que instruye este modificador es que si el valor de *delegate* es `address(0)` (Y, ADEMAS, que si el valor de ethers enviados al contrato es nulo) que se continue la ejecución de las funciones del contrato tal y como se indica en el mismo contrato, pero de no ser asi, se ejecutará de manera delegada las ordenes que se instruyan en la data, contra el contrato que está en la address *delegate*; pero (tal como se indica en los bucles de *switch* para *owner* y *delegate*), si en el proceso de ejecución delegada, alguno de estos parametros fue modificado, entonces se ordena abortar toda la transacción. Finalmente (la ultima instancia de *switch*) si la ejecución delegada no devuelve datos, se entiende que es una transacción fallida y se ordena revertir.  
+
+ - 10.2 **Valor Actual de _delegate_**: Dado que no es posible hacer una consulta directa sobre una variable interna o privada de un contrato, es necesario realizar una detección de todos los posibles eventos vinculados con el cambio de este parámetro en el contrato.
  
  - 10.3
