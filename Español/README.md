@@ -478,5 +478,12 @@ contract.getPastEvents(
 )
 
 ```
- 
+
+Finalmente, desde la consola de comandos ejecutamos:
+
+```cmd
+C:\Users\MiUsuario\CarpetaLocal\Delegate >node app.js
+
+```
+
  - 10.3
