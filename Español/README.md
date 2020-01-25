@@ -180,12 +180,36 @@ Y se pueden obtener los *métodos* ejecutables desde el token mediante la interf
 <br>
 Existe otro modo de hacer esto mismo utilizando [MyEtherWallet](https://www.myetherwallet.com/access-my-wallet) donde al iniciar la cartera con Metamask, vamos a la sección contratos, colocamos la address del token y en la sección del ABI, colocamos el .json de la implementación (cuidando de haber elegido la red correcta, en este caso MAIN):
 
+
+#### Estableciendo los parámetros del contrato (*address* y la interfaz *ABI*):
+
 ![image](MyEth1.PNG)
+
+
+#### Visualizando la función "*name*" (sin argumentos requeridos):
+
 ![image](MyEth2.PNG)
+
+
+#### Visualizando la función "*totalSupply*" (sin argumentos requeridos):
+
 ![image](MyEth3.PNG)
+
+
+#### Visualizando la función *decimals* (sin argumentos requeridos):
+
 ![image](MyEth4.PNG)
+
+
+#### Visualizando la función *symbol* (sin argumentos requeridos):
+
 ![image](MyEth5.PNG)
+
+
+#### Visualizando la función *balanceOf* (con la address `0x8bb38C74B8aaf929201f013C9ECc42b750E562c6` como argumento):
+
 ![image](MyEth7.PNG)
+
 
 Desde la consola pueden intentarse métodos similares:
 
