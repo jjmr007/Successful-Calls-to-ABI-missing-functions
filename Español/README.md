@@ -399,7 +399,7 @@ N° 10 Finalmente abordaremos el caso de [EURS - Stasis](https://etherscan.io/ad
 
  - 10.1 **Estrategia de Actualizacion**: En el contrato existe un modificador llamado "*delegateble*", que afecta a todas las funciones importantes del contrato. Asimismo, el contrato posee una función sin nombre (*fallback*) que lógicamente es afectada por el modificador, en caso que el contrato al que apunta la delegación, posea funciones cuyos nombres sean nuevos y no hayan sido previstos en el contrato actual.
  
-Asimismo, el contrato posee una variable "**_delegate_**", la cual es la dirección de la delegación o el contrato delegado. Mientras que esta variable conserva su valor inicial (que por defecto es `address(0)`) la función sin nombre, de llegar a invocarse siembre abortará su ejecución y todas las funciones del contrato que invocan el modificador, se comportarán justo como lo indica textualmente el contrato en cuestion.
+Asimismo, el contrato posee una variable "**_delegate_**", la cual es la dirección de la delegación o el contrato delegado. Mientras que esta variable conserva su valor inicial (que por defecto es `address(0)`) la función sin nombre, de llegar a invocarse siempre abortará su ejecución; y todas las funciones del contrato que invocan el modificador, se comportarán justo como lo indica textualmente el contrato en cuestion.
 
 **_delegate_** es una variable "*internal*", lo que quiere decir que no es visible al público, ni hay un modo directo de consultarla.
 
@@ -452,6 +452,12 @@ El modificador **_delegateble_** posee las siguientes instrucciones:
 
 Básicamente lo que instruye este modificador es que si el valor de *delegate* es `address(0)` (Y, ADEMAS, que si el valor de ethers enviados al contrato es nulo) que se continue la ejecución de las funciones del contrato tal y como se indica en el mismo contrato, pero de no ser asi, se ejecutará de manera delegada las ordenes que se instruyan en la data, contra el contrato que está en la address *delegate*; pero (tal como se indica en los bucles de *switch* para *owner* y *delegate*), si en el proceso de ejecución delegada, alguno de estos parametros fue modificado, entonces se ordena abortar toda la transacción. Finalmente (la ultima instancia de *switch*) si la ejecución delegada no devuelve datos, se entiende que es una transacción fallida y se ordena revertir.  
 
- - 10.2 **Valor Actual de _delegate_**: Dado que no es posible hacer una consulta directa sobre una variable interna o privada de un contrato, es necesario realizar una detección de todos los posibles eventos vinculados con el cambio de este parámetro en el contrato.
+ - 10.2 **Valor Actual de _delegate_**: Dado que no es posible hacer una consulta directa sobre una variable interna o privada de un contrato, es necesario realizar una detección de todos los posibles eventos vinculados con el cambio de este parámetro en el contrato. Afortunadamente el equipo de [STASIS](https://stasis.net/) tuvo la generosidad de prever un evento asociado al cambio de este parámetro, el cual será emitido cada vez que tal cosa ocurra; el evento **_Delegation_**. Otros parámetros internos al cambiar, lo hacen *silenciosamente*, tal como los casos de las funciones **_setOwner_** y **_setFeeCollector_**. Detectar en la blockchain semejantes cambios silenciosos requiere de escuchar atentamente al contrato, transacción por transacción desde el número de bloque en que fue creado hasta el más reciente. Es un desafio no convencional, y dependiendo del tráfico que experimenta ese contrato, se trata de un desafío casi imposible manualmente, a no ser que se desarrolle un código especial para ello.
+ 
+¿Cómo *escuchar* un determinado evento, emitido por un contrato y rastrear el anuncio de los cambios a lo largo de la blockchain?: mediante un método del paquete [web3.eth.Contract](https://web3js.readthedocs.io/en/v1.2.4/web3-eth-contract.html#web3-eth-contract), el método [**_getPastEvents_**](https://web3js.readthedocs.io/en/v1.2.4/web3-eth-contract.html#getpastevents).
+
+Afortunadamente existe un método sencillo de programar la ejecución de este rastreador de eventos, usando JavaScript mediante una página web como interfaz de usuario, o bien utilizando el entorno de ejecución de Node.js.
+
+En este caso, dado que ya nos hemos apoyado en Node, se sugiere un pequeño código JavaScript, para ejecutarlo en Node:
  
  - 10.3
