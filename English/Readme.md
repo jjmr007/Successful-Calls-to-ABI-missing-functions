@@ -188,23 +188,36 @@ And we can get the *executable* methods from the token through the interface:
 
 There is another way of doing this by using [MyEtherWallet](https://www.myetherwallet.com/access-my-wallet) where, when we start the Metamask wallet, we go to the contracts section, we place the token addres and in the ABI section, we place the .json data of the implementation contract (taking care of having chosen the correct network , in this case MAIN):
 
-Setting the contract parameters (the contract address and the ABI interface):
+
+#### Setting the contract parameters (the contract address and the ABI interface):
+
 ![image](MyEth1.PNG)
 
-Inspecting the function "*name*" (no arguments needed):
+
+#### Inspecting the function "*name*" (no arguments needed):
+
 ![image](MyEth2.PNG)
 
-Inspecting the function "*totalSupply*" (no arguments needed):
+
+#### Inspecting the function "*totalSupply*" (no arguments needed):
+
 ![image](MyEth3.PNG)
 
-Inspecting the function *decimals* (no arguments needed):
+
+#### Inspecting the function *decimals* (no arguments needed):
+
 ![image](MyEth4.PNG)
 
-Inspecting the function *symbol* (no arguments needed):
+
+#### Inspecting the function *symbol* (no arguments needed):
+
 ![image](MyEth5.PNG)
 
-Inspecting the function *balanceOf* (with the address `0x8bb38C74B8aaf929201f013C9ECc42b750E562c6` as argument):
+
+#### Inspecting the function *balanceOf* (with the address `0x8bb38C74B8aaf929201f013C9ECc42b750E562c6` as argument):
+
 ![image](MyEth7.PNG)
+
 
 From the console, similar methods can be try:
 
