@@ -700,7 +700,48 @@ The nonce is a security element that ECDSA signatures require to prevent forgery
  
 Finally, what **_delegatedTransfer_** does is verify how many funds the signatory of the message has (the address that originated the signature v, r, s) and confirm that the nonce approved by the signature corresponds to the internal nonce of the contract. In the case of EURSToken, other conditions pertaining to that contract are verified, such as checking that the signatory is not on any AML "*blacklist*" or if the contract is not paused.
 
-If everything is in order, it proceeds with the respective transfers of funds. The amount **_\_value_** is accredited to the account **_\_to_** and the amount **_\_fee_** is accredited to **_msg.sender_** whoever it is, and which perfectly can be a contract or an externally controlled account (EOA). The balance of the signatory account is updated with the deductions of **_\_value_** and **_\_fee_**.
+If everything is in order, it proceeds with the respective transfers of funds. The amount **_\_value_** is accredited to the account **_\_to_** and the amount **_\_fee_** is accredited to **_msg.sender_** whoever it is, and which perfectly can be a contract or an externally owned account (EOA). The balance of the signatory account is updated with the deductions of **_\_value_** and **_\_fee_**.
 
 
 **ii.- Why the "*approve*" function does not work but _delegatedTransfer_ does**. According to [ERC20 standard](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md) the [recommended configuration](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol) for the function **_approve_** is:
+
+```js
+
+function approve(address spender, uint256 amount) public returns (bool) {
+        _approve(_msgSender(), spender, amount);
+        return true;
+    }
+
+```
+
+where the \_approve function is: 
+
+```js
+
+function _approve(address owner, address spender, uint256 amount) internal {
+        require(owner != address(0), "ERC20: approve from the zero address");
+        require(spender != address(0), "ERC20: approve to the zero address");
+
+        _allowances[owner][spender] = amount;
+        emit Approval(owner, spender, amount);
+    }
+
+```
+
+by the other hand, *\_allowances* is a mapping which registers authorizations or funds delegations:
+
+```js
+mapping (address => mapping (address => uint256)) private _allowances;
+```
+
+and \_msgSender() is a function that identifies who is invoking the contract:
+
+```js
+
+    function _msgSender() internal view returns (address payable) {
+        return msg.sender;
+    }
+
+```
+
+
