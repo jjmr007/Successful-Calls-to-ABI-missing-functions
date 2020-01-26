@@ -675,10 +675,10 @@ function delegatedTransfer (
 
 La función toma siete (7) parámetros, de los cuales sólo cuatro (4) de ellos son variables del entorno del contrato y las otras tres (3) constituyen simplemente la firma ECDSA, con los parámetros v (uint8), r (bytes32) y s (bytes32). Las cuatro primeras variables son:
 
- **\_to** (tipo de variable:**_address_**): Es la dirección hacia donde serán transferidos los fondos.<br>
+ **\_to** (tipo de variable: **_address_**): Es la dirección hacia donde serán transferidos los fondos.<br>
  **\_value** (**_uint256_**): Cantidad de fondos a ser transferidos.<br>
  **\_fee** (**_uint256_**): Comisión a ser pagada al "*delegado*".<br>
- **\_nonce**: Numero criptográfico de uso único. <br>
+ **\_nonce** (**_uint256_**): Numero criptográfico de uso único. <br>
 El nonce es un elemento de seguridad que requieren las firmas ECDSA para prevenir ataques de falsificación. Para este fin el contrato que implementa **_delegatedTransfer_** debe también implementar un mapa que lleva la cuenta de los nonces internos para las addresses que utilizan el contrato. En el caso de EURSToken, este mapa es una variable interna (**_nonces_**) pero es consultable públicamente mediante la función:
  
  ```js
