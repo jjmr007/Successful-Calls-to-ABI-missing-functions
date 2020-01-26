@@ -619,9 +619,9 @@ Si la intención de usar monedas estables, es una adopción que de algún modo i
 
 Este es el aporte tecnológico de la función **_delegatedTransfer_** cuya misión es evitarle al usuario final la necesidad de lidiar con una criptomoneda, cuando su campo de acción se concentra en una moneda diferente. El equipo de STASIS desarrollo una aplicación, disponible tánto para móviles con sistema operativo [**_Android_**](https://play.google.com/store/apps/details?id=com.stasis.stasiswallet), como móviles [**_iOS_**](https://apps.apple.com/app/stasis-wallet/id1371949230) que le permiten al usuario enviar a un *delegado* una solicitud de movilización de fondos, mediante comunicación cliente-servidor totalmente discriminada de la blockchain (una llamada RPC off-chain), para poder llevar a cabo los movimientos del EURS-tóken. Esta solicitud viene acompañada de una firma criptográfica [ECDSA](https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm) bajo el [estándar Ethereum](https://ethereum.stackexchange.com/questions/64380/understanding-ethereum-signatures) que comprende tres parámetros: dos cadenas de 32 bytes llamadas "*R*" y "*S*" y un número de un byte de extensión, o parámetro "*V*".
 
-Dado que este tema se desvía ya del objetivo de este análisis de las estrategias para la actualización de contratos utilizados por algunas monedas estables, a continuación le doy el análisis má breve posible a la funcion **_delegatedTransfer_** :
+Dado que este tema se desvía ya del objetivo de este análisis de las estrategias para la actualización de contratos utilizados por algunas monedas estables, a continuación le doy el análisis más breve posible a la funcion _delegatedTransfer_:
 
-**i.- Cómo funciona delegatedTransfer**. El código solidity de esta función es:
+**i.- Cómo funciona _delegatedTransfer_**. El código solidity de esta función es:
 
 ```js
 
@@ -673,12 +673,12 @@ function delegatedTransfer (
 
 ```
 
-La función toma siete (7) parámetros, de los cuales sólo cuatro (4) de ellos son variables del entorno del contrato y las otras tres (3) constituyen la firma, con los parámetros v (uint8), r (bytes32) y s (bytes32). Las cuatro primeras variables son:
+La función toma siete (7) parámetros, de los cuales sólo cuatro (4) de ellos son variables del entorno del contrato y las otras tres (3) constituyen simplemente la firma ECDSA, con los parámetros v (uint8), r (bytes32) y s (bytes32). Las cuatro primeras variables son:
 
  **\_to** (tipo de variable:**_address_**): Es la dirección hacia donde serán transferidos los fondos.
  **\_value** (**_uint256_**): Cantidad de fondos a ser transferidos.
- **\_fee** (**_uint256_**): Comisión a ser pagada al *delegado*.
- **\_nonce**: Numero criptográfico de uso único. El nonce es un elemento de seguridad que requieren las firmas ECDSA para minimizar ataques de falsificación. Para este fin el contrato que implementa **_delegatedTransfer_** debe también implementar un mapa que lleva la cuenta de los nonces internos para las addresses que utilizan el contrato. En el caso de EURSToken, este mapa es una variable interna (**_nonces_**) pero es consultable públicamente mediante la función:
+ **\_fee** (**_uint256_**): Comisión a ser pagada al "*delegado*".
+ **\_nonce**: Numero criptográfico de uso único. El nonce es un elemento de seguridad que requieren las firmas ECDSA para prevenir ataques de falsificación. Para este fin el contrato que implementa **_delegatedTransfer_** debe también implementar un mapa que lleva la cuenta de los nonces internos para las addresses que utilizan el contrato. En el caso de EURSToken, este mapa es una variable interna (**_nonces_**) pero es consultable públicamente mediante la función:
  
  ```js
  
@@ -690,4 +690,54 @@ La función toma siete (7) parámetros, de los cuales sólo cuatro (4) de ellos 
  
 Finalmente, lo que hace **_delegatedTransfer_** es verificar cuantos fondos posee el signatario del mensaje (la address que originó la firma v,r,s) y confirmar que la firma corresponde con el nonce interno del contrato. En el caso de EURSToken, se verifican otras condiciones propias de ése contrato, como chequear que el signatario no está en ninguna lista negra de prevención al lavado de capitales o si el contrato no esta pausado.
 
-Si todo está en orden, se ordenan las respectivas transferencias de fondos. La cantidad **_\_value_** se le acredita a la cuenta **_\_to_** y la cantidad **_\_fee_** se le acredita a **_msg.sender_** quien quiera que sea el "*delegado*", que perfectamente peude ser un contrato o una cuenta externamente controlada (EOA). Al signatario se le actualiza su saldo con las deducciones de **_\_value_** y 
+Si todo está en orden, se ordenan las respectivas transferencias de fondos. La cantidad **_\_value_** se le acredita a la cuenta **_\_to_** y la cantidad **_\_fee_** se le acredita a **_msg.sender_** quien quiera que sea el "*delegado*", que perfectamente peude ser un contrato o una cuenta externamente controlada (EOA). Al signatario se le actualiza su saldo con las deducciones de **_\_value_** y **_\_fee_**.
+
+
+**ii.- Por qué la función "*approve*" no funciona pero _delegatedTransfer_ sí lo hace**. De acuerdo al [estándard ERC20](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md) la [configuración recomendada](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol) para la función **_approve_** es:
+
+```js
+
+function approve(address spender, uint256 amount) public returns (bool) {
+        _approve(_msgSender(), spender, amount);
+        return true;
+    }
+
+```
+
+donde 
+
+```js
+
+function _approve(address owner, address spender, uint256 amount) internal {
+        require(owner != address(0), "ERC20: approve from the zero address");
+        require(spender != address(0), "ERC20: approve to the zero address");
+
+        _allowances[owner][spender] = amount;
+        emit Approval(owner, spender, amount);
+    }
+
+```
+
+Donde *\_allowances* es un mapa que registra autorizaciones o delegaciones de fondos:
+
+```js
+mapping (address => mapping (address => uint256)) private _allowances;
+```
+
+y \_msgSender() es una función que identifica quién esta invocando al contrato:
+
+```js
+
+    function _msgSender() internal view returns (address payable) {
+        return msg.sender;
+    }
+
+```
+
+Lo que en pocas palabras significa que **_approve_** modifica el mapa *\_allowances* asumiendo como dueño de los fondos unicamente a la dirección **_msg.sender_**, es decir, el ente o elemento que hace **_directamente_** la llamada al contrato que maneja los tokens ERC20.
+
+No hay manera de delegar el manejo de fondos a través de un contrato que intermedie en esa transacción, tiene que ser *directamente* el dueño de estos fondos. Adicionalmente, la invocación de approve que necesariamente debe realizarse mediante una transacción es sólo la mitad de la historia: una vez que la cuenta **_spender_** ha sido autorizada, debe efectuar la invocación a la función **_transferFrom_** para en efecto hacer uso (cualquiera que sea) de los fondos. Y esto debe realizarse en otra transacción aparte, lo cual obliga al interesado costear dos veces el monto mínimo de gasolina que exige una transacción (21.000 unidades de Gas).
+
+Además de [otras complicaciones](https://blog.smartdec.net/erc20-approve-issue-in-simple-words-a41aaf47bca6) que pueden surgir, esto ya es dificil de incorporar en una aplicación para usuarios en general, que no necesitan enterarse de las capas internas de su aplicación.
+
+A diferencia de esto, **_delegatedTransfer_** es una función segura de delegación de fondos y al mismo tiempo una asignación efectiva de fonndos hacia cualquier entidad (sea contrato o cuenta normal), y por ende puede ser invocada desde un contrato, a través de funciones que pueden invocar otras funciones, de cualquier otra cantidad de contratos que se necesiten **_en una sola transacción_**. Lo que hace posible que el usuario final, ni siquiera tenga que lidiar con la compra de una *criptomoneda* llamada Ethereum.
