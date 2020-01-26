@@ -682,4 +682,19 @@ function delegatedTransfer (
 
 ```
 
+The function takes seven (7) parameters, of which only four (4) of them are variables from the contract environment and the other three (3) constitute simply the ECDSA signature, with the parameters v (uint8), r (bytes32) and s (bytes32). The first four variables are:
 
+ **\_to** (variable type: **_address_**): it is the address where the funds will be transferred. <br>
+ **\_value** (**_uint256_**): amount of funds to be transferred. <br>
+ **\_fee** (**_uint256_**): fee to be paid to the "*delegate*". <br>
+ **\_nonce** (**_uint256_**): single use cryptographic number. <br>
+The nonce is a security element that ECDSA signatures require to prevent forgery attacks. For this purpose, the contract that implements **_delegatedTransfer_** must also implement a mapping that keeps the internal nonces account for the addresses that use this function in the contract. In the case of EURSToken, this mapping is an internal variable (**_nonces_**) but it is publicly available using the function:
+ 
+ ```js
+ 
+ function nonce (address _owner) public view delegatable returns (uint256) {
+    return nonces [_owner];
+  }
+ 
+ ```
+ 
