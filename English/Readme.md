@@ -630,4 +630,4 @@ This is the technological contribution of the function **_delegatedTransfer_** w
 
 Since this topic already deviates from the objective of this analysis of the strategies for updating contracts used by some stable currencies, I give the briefest possible analysis to the _delegatedTransfer_ function:
 
-** i.- How _delegatedTransfer _ ** works. The solidity code of this function is:
+**i.- How _delegatedTransfer_ works**. The solidity code of this function is:
