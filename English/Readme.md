@@ -431,9 +431,9 @@ Promise { <pending> }
 > 0
 ```
 
-### III.- The [EURS-Stasis](https://etherscan.io/address/0xdb25f211ab05b1c97d595516f45794528a807ad8#code) Case
+### III. - The [EURS-Stasis](https://etherscan.io/address/0xdb25f211ab05b1c97d595516f45794528a807ad8#code) Case
 
-N ° 10 Finally, we will address the case of EURS - Stasis. This contract, which has an update plan with intermediate technology, introduces a great innovation: the transfer with delegation by the means of signatures; which would have the capacity incidentally to solve the inconveniences that implicitly generate the "*approve*" and "*transferFrom*" functions, making them (together with their "*allowances*" mapping) obsolete programming objects in an ERC20 token.
+We will finally address the case of EURS-Stasis. This contract, which has an update plan with intermediate technology, introduces a great innovation: the transfer with delegation by the means of signatures; which would have the capacity incidentally to solve the inconveniences that implicitly generate the "*approve*" and "*transferFrom*" functions, making them (together with their "*allowances*" mapping) obsolete programming objects in an ERC20 token.
 
 N° 1 **Upgrade Strategy** : In the contract there is a modifier called "*delegatable*", which affects all the important functions of the contract. Likewise, the contract has an unnamed function (*fallback*) that is logically affected by the modifier, in case the contract to which the delegation points out, has functions whose names are new and have not been foreseen in the current contract.
 
@@ -620,4 +620,4 @@ This indicate us that just 1 hour after the contract was deployed (in block No. 
 
 Note that the transactions that cause the issuance of the *FeeChange* events originate from the invocation of a contract distinct than **EURSToken**: A [**_Wallet_**](https://etherscan.io / address / 0x2ebbbc541e8f8f24386fa319c79ceda0579f1efb # code) contract, which executes a generic transaction: *confirm*; which invokes the value of a map with a pre-image equal to a hash value and the map image is the data of certain transaction (data deleted after the execution), which in turn can call another or other contracts. *Wallet* is a type of contract to handle transactions in an indirect and protected manner, by a group of owners, in such a way to obfuscate the data of such transactions and require the appropriate authorization for each transaction of interest.
 
-10.3 **The Innovation of the Function _delegatedTransfer_**: 
+10.3 **The Innovation of the Function _delegatedTransfer_**:
