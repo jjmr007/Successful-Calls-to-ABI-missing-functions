@@ -59,7 +59,7 @@ For low traffic cases and test environments, a completely free link can be obtai
 
 You have to make a simple subscription and register a project. In return, the platform gives us a URL that will give us indirect access to the Ethereum network. This address will have the form of:
 
-```url
+```js
 mainnet.infura.io/v3/PROJECT_KEY_NUMBER
 ```
 
@@ -101,7 +101,7 @@ Then all the content is displayed in an orderly manner and it will be more or le
 
 As expected, nothing of "transfer" or "balanceOf". So, what can we do now?
 
-N ° 6 The first thing that catches our attention is that it is a contract that has already undergone an update. Its address number strangely and inexplicably has at the beginning sequence of [11 zeros!](https://etherscan.io/address/0x0000000000085d4780b73119b644ae5ecd22b376#code) How did they achieve such eccentricity?
+**N° 6** The first thing that catches our attention is that it is a contract that has already undergone an update. Its address number strangely and inexplicably has at the beginning sequence of [11 zeros!](https://etherscan.io/address/0x0000000000085d4780b73119b644ae5ecd22b376#code) How did they achieve such eccentricity?
 
 It was used a special application to calculate "[vanity addresses](https://github.com/MyEtherWallet/VanityEth)" that what they do is to generate as in a mining software, multiple private keys for externally controlled addresses (EOA) in order to deploy a contract several times, until the contract address deployed had the amount of zeros that the algorithm can afford or the user is willing to wait for them to be generated. This was carried out by the [Trust-Token](https://www.trusttoken.com/) company in order to grant an extra security feature to its contracts.
 
@@ -117,7 +117,7 @@ The repository continues:
 
 But the curious things about this function are the instructions that it orders within its internal description:
 
-```js
+```solidity
 function() external payable {
         address _impl = implementation();
         require(_impl != address(0), "implementation contract not set");
@@ -315,7 +315,7 @@ But this time, to discover the ABI we need the interface, which this team had th
 
 In this case, the contract that invokes the USD-Coin token is called "FiatTokenProxy", and its "*Fallback-Function*" makes an indirect call to an internal (private) function that is the one that contains the assembly code, with a little better efficiency design (thanks also to the [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-labs/blob/master/initializer_contracts_with_args/contracts/Proxy.sol) developers) and containing the following:
 
-```js
+```solidity
   function () payable external {
     _fallback();
   }
@@ -443,7 +443,7 @@ Likewise, the contract has a "**_delegate_**" variable, which is the address of 
 
 The **_delegatable_** modifier has the following instructions:
 
-```js
+```solidity
   modifier delegatable {
     if (delegate == address (0)) {
       require (msg.value == 0); // Non payable if not delegated
@@ -632,7 +632,7 @@ Since this topic already deviates from the objective of this analysis of the str
 
 **i.- How _delegatedTransfer_ works**. The solidity code of this function is:
 
-```js
+```solidity
 
 function delegatedTransfer (
     address _to, uint256 _value, uint256 _fee,
@@ -690,7 +690,7 @@ The function takes seven (7) parameters, of which only four (4) of them are vari
  **\_nonce** (**_uint256_**): single use cryptographic number. <br>
 The nonce is a security element that ECDSA signatures require to prevent forgery attacks. For this purpose, the contract that implements **_delegatedTransfer_** must also implement a mapping that keeps the internal nonces account for the addresses that use this function in the contract. In the case of EURSToken, this mapping is an internal variable (**_nonces_**) but it is publicly available using the function:
  
- ```js
+ ```solidity
  
  function nonce (address _owner) public view delegatable returns (uint256) {
     return nonces [_owner];
@@ -705,7 +705,7 @@ If everything is in order, it proceeds with the respective transfers of funds. T
 
 **ii.- Why the "*approve*" function does not work but _delegatedTransfer_ does**. According to [ERC20 standard](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md) the [recommended configuration](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol) for the function **_approve_** is:
 
-```js
+```solidity
 
 function approve(address spender, uint256 amount) public returns (bool) {
         _approve(_msgSender(), spender, amount);
@@ -716,7 +716,7 @@ function approve(address spender, uint256 amount) public returns (bool) {
 
 where the \_approve function is: 
 
-```js
+```solidity
 
 function _approve(address owner, address spender, uint256 amount) internal {
         require(owner != address(0), "ERC20: approve from the zero address");
@@ -730,13 +730,13 @@ function _approve(address owner, address spender, uint256 amount) internal {
 
 by the other hand, *\_allowances* is a mapping which registers authorizations or funds delegations:
 
-```js
+```solidity
 mapping (address => mapping (address => uint256)) private _allowances;
 ```
 
 and \_msgSender() is a function that identifies who is invoking the contract:
 
-```js
+```solidity
 
     function _msgSender() internal view returns (address payable) {
         return msg.sender;
