@@ -50,7 +50,7 @@ undefined
 
 Hay que realizar una sencilla suscripción y registrar un proyecto. A cambio la plataforma nos da una dirección URL que nos dará acceso indirecto a la red ethereum. Esta dirección tendrá la forma de:
 
-```url
+```js
 mainnet.infura.io/v3/PROJECT_KEY_NUMBER
 ```
 
@@ -108,7 +108,7 @@ Continúa el repositorio:
 
 Pero lo curioso de esta función son las instrucciones que ordena dentro de su descripción interna:
 
-```js
+```solidity
 function() external payable {
         address _impl = implementation();
         require(_impl != address(0), "implementation contract not set");
@@ -307,7 +307,7 @@ Pero para descubrir ahora el ABI, necesitamos la interfaz, que este equipo tuvo 
 
 En este caso, el contrato que invoca al token USD-Coin se denomina "FiatTokenProxy", y su "*Fallback-Function*", hace una llamada indirecta a una función interna (privada) que es la que contiene el código assembly, un poco mejor diseñado en cuanto a eficiencia (gracias también a los desarrolladores de [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-labs/blob/master/initializer_contracts_with_args/contracts/Proxy.sol) ) y que contiene lo siguiente:
 
-```js
+```solidity
   function () payable external {
     _fallback();
   }
@@ -434,7 +434,7 @@ Asimismo, el contrato posee una variable "**_delegate_**", la cual es la direcci
 
 El modificador **_delegatable_** posee las siguientes instrucciones:
 
-```js
+```solidity
   modifier delegatable {
     if (delegate == address (0)) {
       require (msg.value == 0); // Non payable if not delegated
@@ -623,7 +623,7 @@ Dado que este tema se desvía ya del objetivo de este análisis de las estrategi
 
 **i.- Cómo funciona _delegatedTransfer_**. El código solidity de esta función es:
 
-```js
+```solidity
 
 function delegatedTransfer (
     address _to, uint256 _value, uint256 _fee,
@@ -681,7 +681,7 @@ La función toma siete (7) parámetros, de los cuales sólo cuatro (4) de ellos 
  **\_nonce** (**_uint256_**): Numero criptográfico de uso único. <br>
 El nonce es un elemento de seguridad que requieren las firmas ECDSA para prevenir ataques de falsificación. Para este fin el contrato que implementa **_delegatedTransfer_** debe también implementar un mapa que lleva la cuenta de los nonces internos para las addresses que utilizan el contrato. En el caso de EURSToken, este mapa es una variable interna (**_nonces_**) pero es consultable públicamente mediante la función:
  
- ```js
+ ```solidity
  
  function nonce (address _owner) public view delegatable returns (uint256) {
     return nonces [_owner];
@@ -696,7 +696,7 @@ Si todo está en orden, se procede con las respectivas transferencias de fondos.
 
 **ii.- Por qué la función "*approve*" no funciona pero _delegatedTransfer_ sí lo hace**. De acuerdo al [estándar ERC20](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md) la [configuración recomendada](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol) para la función **_approve_** es:
 
-```js
+```solidity
 
 function approve(address spender, uint256 amount) public returns (bool) {
         _approve(_msgSender(), spender, amount);
@@ -707,7 +707,7 @@ function approve(address spender, uint256 amount) public returns (bool) {
 
 donde 
 
-```js
+```solidity
 
 function _approve(address owner, address spender, uint256 amount) internal {
         require(owner != address(0), "ERC20: approve from the zero address");
@@ -721,13 +721,13 @@ function _approve(address owner, address spender, uint256 amount) internal {
 
 por otro lado, *\_allowances* es un mapa que registra autorizaciones o delegaciones de fondos:
 
-```js
+```solidity
 mapping (address => mapping (address => uint256)) private _allowances;
 ```
 
 y \_msgSender() es una función que identifica quién esta invocando al contrato:
 
-```js
+```solidity
 
     function _msgSender() internal view returns (address payable) {
         return msg.sender;
